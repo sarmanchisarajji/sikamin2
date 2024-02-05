@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\StaffController;
 
 /*
@@ -15,9 +16,13 @@ use App\Http\Controllers\StaffController;
 |
 */
 
-Route::get('/login', [AuthController::class, 'login']);
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+
+Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/logout', [AuthController::class, 'logout']);
-Route::post('login/auth', [AuthController::class, 'auth']);
+Route::post('/login/auth', [AuthController::class, 'auth']);
 
 Route::middleware(['auth'])->group(function () {
     // Route Staff
@@ -27,9 +32,10 @@ Route::middleware(['auth'])->group(function () {
 
     // Route Mahasiswa
     Route::middleware(['can:mahasiswa'])->group(function () {
-        Route::get('/mahasiswa/dashboard', function () {
-            return view('mahasiswa.index');
-        });
+        Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'index']);
+        Route::get('/mahasiswa/pengajuan-ujian', [MahasiswaController::class, 'pengajuanUjian']);
+        Route::get('/mahasiswa/pengajuan-ujian/tambah-ujian', [MahasiswaController::class, 'tambahUjian']);
+        Route::get('/mahasiswa/monitoring-ujian', [MahasiswaController::class, 'monitoringUjian']);
     });
 
     // Route Dosen

@@ -5,10 +5,10 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="page-sub-header">
-                        <h3 class="page-title">Welcome Admin!</h3>
+                        <h3 class="page-title">Welcome {{ Auth::user()->nama_pengguna }}!</h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li class="breadcrumb-item active">Admin</li>
+                            <li class="breadcrumb-item"><a href="/mahasiswa/dashboard">Home</a></li>
+                            <li class="breadcrumb-item active">Mahasiswa</li>
                         </ul>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
             </div>
         </div>
 
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-md-12 col-lg-6">
 
                 <div class="card card-chart">
@@ -358,6 +358,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
+    <footer>
+        <p>Copyright © 2022 Dreamguys.</p>
+    </footer>
 @endsection
