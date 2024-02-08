@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\UjianController;
+use App\Http\Controllers\MahasiswaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,9 +34,15 @@ Route::middleware(['auth'])->group(function () {
     // Route Mahasiswa
     Route::middleware(['can:mahasiswa'])->group(function () {
         Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'index']);
-        Route::get('/mahasiswa/pengajuan-ujian', [MahasiswaController::class, 'pengajuanUjian']);
-        Route::get('/mahasiswa/pengajuan-ujian/tambah-ujian', [MahasiswaController::class, 'tambahUjian']);
-        Route::get('/mahasiswa/monitoring-ujian', [MahasiswaController::class, 'monitoringUjian']);
+        Route::get('/mahasiswa/profil', [MahasiswaController::class, 'profil']);
+
+        Route::get('/mahasiswa/pengajuan-ujian', [UjianController::class, 'pengajuanUjianMahasiswa']);
+        Route::get('/mahasiswa/form-ujian/{id?}', [UjianController::class, 'formUjianMahasiswa']);
+        Route::post('/mahasiswa/pengajuan-ujian/store', [UjianController::class, 'storeUjianMahasiswa']);
+        Route::put('/mahasiswa/pengajuan-ujian/update/{id}', [UjianController::class, 'updateUjianMahasiswa']);
+        Route::delete('/mahasiswa/pengajuan-ujian/delete/{id}', [UjianController::class, 'deleteUjianMahasiswa']);
+
+        Route::get('/mahasiswa/monitoring-ujian', [UjianController::class, 'monitoringUjianMahasiswa']);
     });
 
     // Route Dosen

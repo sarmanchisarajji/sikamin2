@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dosen;
+use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MahasiswaController extends Controller
 {
@@ -11,18 +14,8 @@ class MahasiswaController extends Controller
         return view('mahasiswa.index');
     }
 
-    public function pengajuanUjian()
+    public function profil()
     {
-        return view('mahasiswa.pengajuan-ujian');
-    }
-
-    public function monitoringUjian()
-    {
-        return view('mahasiswa.monitoring-ujian');
-    }
-
-    public function tambahUjian()
-    {
-        return view('mahasiswa.tambah-ujian');
+        return view('mahasiswa.profil',);
     }
 }

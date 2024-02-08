@@ -35,9 +35,7 @@
         <div class="page-wrapper">
             @yield('main-contents')
 
-            {{-- <footer>
-                <p>Copyright © 2024 Dreamguys.</p>
-            </footer> --}}
+            @include('layouts.footer')
         </div>
     </div>
 
@@ -48,7 +46,16 @@
     <script src="{{ asset('') }}assets/plugins/apexchart/apexcharts.min.js"></script>
     <script src="{{ asset('') }}assets/plugins/apexchart/chart-data.js"></script>
     <script src="{{ asset('') }}assets/js/script.js"></script>
+    <script src="{{ asset('') }}assets/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="{{ asset('') }}assets/plugins/datatables/datatables.min.js"></script>
+    <script>
+        $("#example").DataTable({
+            "responsive": true,
+            "lengthChange": true,
+            "autoWidth": false,
+            // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');
+    </script>
 
 </body>
 
