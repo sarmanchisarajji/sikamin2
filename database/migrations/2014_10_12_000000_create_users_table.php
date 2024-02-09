@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('no_hp');
             $table->enum('user_type', ['staff', 'mahasiswa', 'dosen']);
             $table->enum('is_aktif', ['y', 'n']);
+            $table->string('foto')->nullable();
             $table->timestamps();
         });
     }
