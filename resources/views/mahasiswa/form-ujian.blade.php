@@ -64,7 +64,7 @@
                                 <label class="col-form-label col-md-2">Judul Penelitian</label>
                                 <div class="col-md-10">
                                     <textarea rows="5" cols="5" name="judul" class="form-control" placeholder="Masukan Judul Penelitian"
-                                        @error('judul') is-invalid @enderror required>{{ isset($ujian) ? $ujian->judul : old('judul', '') }}</textarea>
+                                        @error('judul') is-invalid @enderror required>{{ old('judul', isset($ujian) ? $ujian->judul : '') }}</textarea>
                                 </div>
                                 @error('judul')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -75,7 +75,7 @@
                                 <div class="col-md-10">
                                     <input type="text" name="ipk_sementara" class="form-control"
                                         @error('ipk_sementara') is-invalid @enderror placeholder="Masukan IPK Sementara"
-                                        value="{{ isset($ujian) ? $ujian->ipk_sementara : old('ipk_sementara', '') }}"
+                                        value="{{ old('ipk_sementara', isset($ujian) ? $ujian->ipk_sementara : '') }}"
                                         required>
                                 </div>
                                 @error('ipk_sementara')
@@ -88,17 +88,19 @@
                                     <select name="jenis_ujian"
                                         class="form-control form-select @error('jenis_ujian') is-invalid @enderror"
                                         required>
-                                        <option value="">~ Pilih Jenis Ujian ~</option>
+                                        @if (!isset($ujian))
+                                            <option value="">~ Pilih Jenis Ujian ~</option>
+                                        @endif
                                         <option value="proposal"
-                                            {{ old('jenis_ujian') == 'proposal' || (isset($ujian) && $ujian->jenis_ujian == 'proposal') ? 'selected' : '' }}>
+                                            {{ old('jenis_ujian', isset($ujian) ? $ujian->jenis_ujian : '') == 'proposal' ? 'selected' : '' }}>
                                             Ujian Proposal
                                         </option>
                                         <option value="hasil"
-                                            {{ old('jenis_ujian') == 'hasil' || (isset($ujian) && $ujian->jenis_ujian == 'hasil') ? 'selected' : '' }}>
+                                            {{ old('jenis_ujian', isset($ujian) ? $ujian->jenis_ujian : '') == 'hasil' ? 'selected' : '' }}>
                                             Ujian Hasil
                                         </option>
                                         <option value="skripsi"
-                                            {{ old('jenis_ujian') == 'skripsi' || (isset($ujian) && $ujian->jenis_ujian == 'skripsi') ? 'selected' : '' }}>
+                                            {{ old('jenis_ujian', isset($ujian) ? $ujian->jenis_ujian : '') == 'skripsi' ? 'selected' : '' }}>
                                             Ujian Skripsi
                                         </option>
                                     </select>
@@ -113,10 +115,12 @@
                                     <select name="id_pembimbing_1"
                                         class="form-control form-select @error('id_pembimbing_1') is-invalid @enderror"
                                         required>
-                                        <option value="">~ Pilih Dosen ~</option>
+                                        @if (!isset($ujian))
+                                            <option value="">~ Pilih Dosen ~</option>
+                                        @endif
                                         @foreach ($dosens as $dosen)
                                             <option value="{{ $dosen->id }}"
-                                                {{ old('id_pembimbing_1') == $dosen->id || (isset($ujian) && $ujian->id_pembimbing_1 == $dosen->id) ? 'selected' : '' }}>
+                                                {{ old('id_pembimbing_1', isset($ujian) ? $ujian->id_pembimbing_1 : '') == $dosen->id ? 'selected' : '' }}>
                                                 {{ $dosen->nama_dosen }}
                                             </option>
                                         @endforeach
@@ -132,10 +136,12 @@
                                     <select name="id_pembimbing_2"
                                         class="form-control form-select @error('id_pembimbing_2') is-invalid @enderror"
                                         required>
-                                        <option value="">~ Pilih Dosen ~</option>
+                                        @if (!isset($ujian))
+                                            <option value="">~ Pilih Dosen ~</option>
+                                        @endif
                                         @foreach ($dosens as $dosen)
                                             <option value="{{ $dosen->id }}"
-                                                {{ old('id_pembimbing_2') == $dosen->id || (isset($ujian) && $ujian->id_pembimbing_2 == $dosen->id) ? 'selected' : '' }}>
+                                                {{ old('id_pembimbing_2', isset($ujian) ? $ujian->id_pembimbing_2 : '') == $dosen->id ? 'selected' : '' }}>
                                                 {{ $dosen->nama_dosen }}
                                             </option>
                                         @endforeach

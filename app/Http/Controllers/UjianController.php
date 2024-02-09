@@ -21,11 +21,6 @@ class UjianController extends Controller
         ]);
     }
 
-    public function monitoringUjianMahasiswa()
-    {
-        return view('mahasiswa.monitoring-ujian');
-    }
-
     public function formUjianMahasiswa($id = null)
     {
         $mahasiswa = Mahasiswa::where('id_user', Auth::user()->id)->first();
@@ -107,4 +102,18 @@ class UjianController extends Controller
 
         return redirect('mahasiswa/pengajuan-ujian')->with('success','Data berhasil dihapus');
     }
+
+    public function monitoringUjianMahasiswa()
+    {  
+        $mahasiswa = Mahasiswa::where('id_user', Auth::user()->id)->first();
+        $ujians = $mahasiswa->ujian()
+                            ->whereIn('status', ['disetujui', 'selesai'])
+                            ->orderBy('tanggal_ujian', 'desc')
+                            ->get();
+        return view('mahasiswa.monitoring-ujian', [
+            'mahasiswa' => $mahasiswa,
+            'ujians' => $ujians
+        ]);
+    }
+
 }

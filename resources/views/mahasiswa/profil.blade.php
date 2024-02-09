@@ -16,25 +16,73 @@
 
         <div class="row">
             <div class="col-md-12">
+                @if (session('success'))
+                    @include('mahasiswa.components.alert-success', ['message' => session('success')])
+                @endif
+                @if ($errors->any())
+                    @include('mahasiswa.components.alert-danger', ['errors' => $errors->all()])
+                @endif
                 <div class="profile-header">
                     <div class="row align-items-center">
                         <div class="col-auto profile-image">
                             <a href="#">
-                                <img class="rounded-circle" alt="User Image" src="assets/img/profiles/avatar-02.jpg">
+                                <img class="rounded-circle" alt="{{ $mahasiswa->nama }}"
+                                    src="{{ asset("storage/$user->foto") }}">
                             </a>
                         </div>
                         <div class="col ms-md-n2 profile-user-info">
-                            <h4 class="user-name mb-0">John Doe</h4>
-                            <h6 class="text-muted">UI/UX Design Team</h6>
-                            <div class="user-Location"><i class="fas fa-map-marker-alt"></i> Florida, United States</div>
-                            <div class="about-text">Lorem ipsum dolor sit amet.</div>
+                            <h4 class="user-name mb-0">{{ $mahasiswa->nama }}</h4>
+                            <h6 class="text-muted">{{ $mahasiswa->nim }}</h6>
+                            <div class="about-text">Jurusan Teknik Informatika Angkatan {{ $mahasiswa->tahun_masuk }}</div>
                         </div>
                         <div class="col-auto profile-btn">
-                            <a href="" class="btn btn-primary">
-                                Edit
-                            </a>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#fotoModal">
+                                Edit Foto Profil
+                            </button>
                         </div>
                     </div>
+
+                    {{--  Modal Edit Foto Profil --}}
+                    <div id="fotoModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                        aria-hidden="true" style="display: none;">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Edit Foto Profil</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body p-4">
+                                    <form action="{{ url('mahasiswa/profil/update-foto') }}" method="POST"
+                                        enctype="multipart/form-data">
+                                        @method('PUT')
+                                        @csrf
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="mb-3">
+                                                    <label for="foto" class="form-label">Unggah Foto</label>
+                                                    <p class="text-danger">Maksimal 2 MB dan disarankan menggunakan rasio
+                                                        foto 1:1</p>
+                                                    <input type="file" name="foto" @error('foto') is-invalid @enderror
+                                                        class="form-control" id="foto" placeholder="Unggah File"
+                                                        required accept=".png, .jpg, .jpeg">
+                                                    @error('foto')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary waves-effect"
+                                        data-bs-dismiss="modal">Batal</button>
+                                    <button type="submit" class="btn btn-info waves-effect waves-light">Simpan</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="profile-menu">
                     <ul class="nav nav-tabs nav-tabs-solid">
@@ -49,103 +97,168 @@
                 <div class="tab-content profile-tab-cont">
 
                     <div class="tab-pane fade show active" id="per_details_tab">
-
                         <div class="row">
-                            <div class="col-lg-9">
+                            <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title d-flex justify-content-between">
-                                            <span>Personal Details</span>
-                                            <a class="edit-link" data-bs-toggle="modal" href="#edit_personal_details"><i
-                                                    class="far fa-edit me-1"></i>Edit</a>
+                                            <span>Detail Mahasiswa</span>
+                                            <button class="btn btn-light edit-link" data-bs-toggle="modal"
+                                                data-bs-target="#dataModal"><i class="far fa-edit me-1"></i>Edit</button>
                                         </h5>
                                         <div class="row">
-                                            <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Name</p>
-                                            <p class="col-sm-9">John Doe</p>
+                                            <p class="col-sm-6 text-muted text-sm-end mb-0 mb-sm-3">Nama Lengkap</p>
+                                            <p class="col-sm-6">{{ $mahasiswa->nama }}</p>
                                         </div>
                                         <div class="row">
-                                            <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Date of Birth</p>
-                                            <p class="col-sm-9">24 Jul 1983</p>
-                                        </div>
-                                        <div class="row">
-                                            <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Email ID</p>
-                                            <p class="col-sm-9"><a href="/cdn-cgi/l/email-protection" class="__cf_email__"
-                                                    data-cfemail="a1cbcec9cfc5cec4e1c4d9c0ccd1cdc48fc2cecc">[email&#160;protected]</a>
+                                            <p class="col-sm-6 text-muted text-sm-end mb-0 mb-sm-3">Nomor Induk Mahasiswa
                                             </p>
+                                            <p class="col-sm-6">{{ $mahasiswa->nim }}</p>
                                         </div>
                                         <div class="row">
-                                            <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Mobile</p>
-                                            <p class="col-sm-9">305-310-5857</p>
+                                            <p class="col-sm-6 text-muted text-sm-end mb-0 mb-sm-3">Username Akun
+                                            </p>
+                                            <p class="col-sm-6">{{ $user->username }}</p>
                                         </div>
                                         <div class="row">
-                                            <p class="col-sm-3 text-muted text-sm-end mb-0">Address</p>
-                                            <p class="col-sm-9 mb-0">4663 Agriculture Lane,<br>
-                                                Miami,<br>
-                                                Florida - 33165,<br>
-                                                United States.</p>
+                                            <p class="col-sm-6 text-muted text-sm-end mb-0 mb-sm-3">Email
+                                            </p>
+                                            <p class="col-sm-6">{{ $user->email }}</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-sm-6 text-muted text-sm-end mb-0 mb-sm-3">Nomor Telepon
+                                            </p>
+                                            <p class="col-sm-6">{{ $user->no_hp }}</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-sm-6 text-muted text-sm-end mb-0 mb-sm-3">Jenis Akun
+                                            </p>
+                                            <p class="col-sm-6">{{ Str::ucfirst($user->user_type) }}</p>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-3">
-
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title d-flex justify-content-between">
-                                            <span>Account Status</span>
-                                            <a class="edit-link" href="#"><i class="far fa-edit me-1"></i> Edit</a>
-                                        </h5>
-                                        <button class="btn btn-success" type="button"><i class="fe fe-check-verified"></i>
-                                            Active</button>
-                                    </div>
-                                </div>
-
-
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title d-flex justify-content-between">
-                                            <span>Skills </span>
-                                            <a class="edit-link" href="#"><i class="far fa-edit me-1"></i> Edit</a>
-                                        </h5>
-                                        <div class="skill-tags">
-                                            <span>Html5</span>
-                                            <span>CSS3</span>
-                                            <span>WordPress</span>
-                                            <span>Javascript</span>
-                                            <span>Android</span>
-                                            <span>iOS</span>
-                                            <span>Angular</span>
-                                            <span>PHP</span>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
-
                     </div>
 
+                    <div id="dataModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                        aria-hidden="true" style="display: none;">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Edit Profil</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body p-4">
+                                    <form action="{{ url('mahasiswa/profil/update-data') }}" method="POST"
+                                        enctype="multipart/form-data">
+                                        @method('PUT')
+                                        @csrf
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="mb-3">
+                                                    <label for="nama" class="form-label">Nama Lengkap</label>
+                                                    <input type="text" name="nama"
+                                                        @error('nama') is-invalid @enderror class="form-control"
+                                                        id="nama" placeholder="Masukkan Nama Lengkap"
+                                                        value="{{ old('nama', $mahasiswa->nama) }}" required>
+                                                    @error('nama')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="mb-3">
+                                                    <label for="nim" class="form-label">NIM</label>
+                                                    <input type="text" name="nim"
+                                                        @error('nim') is-invalid @enderror class="form-control"
+                                                        id="nim" placeholder="Masukkan NIM"
+                                                        value="{{ old('nim', $mahasiswa->nim) }}" required>
+                                                    @error('nim')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="mb-3">
+                                                    <label for="username" class="form-label">Username Akun</label>
+                                                    <input type="text" name="username"
+                                                        @error('username') is-invalid @enderror class="form-control"
+                                                        id="username" placeholder="Masukkan username"
+                                                        value="{{ old('username', $user->username) }}" required>
+                                                    @error('username')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="mb-3">
+                                                    <label for="email" class="form-label">Email</label>
+                                                    <input type="email" name="email"
+                                                        @error('email') is-invalid @enderror class="form-control"
+                                                        id="email" placeholder="Masukkan email"
+                                                        value="{{ old('email', $user->email) }}" required>
+                                                    @error('email')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="mb-3">
+                                                    <label for="no_hp" class="form-label">Nomor Telepon</label>
+                                                    <input type="text" name="no_hp"
+                                                        @error('no_hp') is-invalid @enderror class="form-control"
+                                                        id="no_hp" placeholder="Masukkan no_hp"
+                                                        value="{{ old('no_hp', $user->no_hp) }}" required>
+                                                    @error('no_hp')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary waves-effect"
+                                        data-bs-dismiss="modal">Batal</button>
+                                    <button type="submit" class="btn btn-info waves-effect waves-light">Simpan</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
 
                     <div id="password_tab" class="tab-pane fade">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Change Password</h5>
+                                <h5 class="card-title">Ganti Kata Sandi</h5>
                                 <div class="row">
                                     <div class="col-md-10 col-lg-6">
-                                        <form>
+                                        <form action="{{ url('mahasiswa/profil/ganti-password') }}" method="POST">
+                                            @method('PUT')
+                                            @csrf
                                             <div class="form-group">
-                                                <label>Old Password</label>
-                                                <input type="password" class="form-control">
+                                                <label>Kata Sandi Lama</label>
+                                                <input type="password" name="old_password" class="form-control">
+                                                @error('old_password')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                             <div class="form-group">
-                                                <label>New Password</label>
-                                                <input type="password" class="form-control">
+                                                <label>Kata Sandi Baru</label>
+                                                <input type="password" name="new_password" class="form-control">
+                                                @error('new_password')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                             <div class="form-group">
-                                                <label>Confirm Password</label>
-                                                <input type="password" class="form-control">
+                                                <label>Konfirmasi Kata Sandi Baru</label>
+                                                <input type="password" name="confirm_new_password" class="form-control">
+                                                @error('confirm_new_password')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
                                             </div>
-                                            <button class="btn btn-primary" type="submit">Save Changes</button>
+                                            <button class="btn btn-primary" type="submit">Simpan Sandi</button>
                                         </form>
                                     </div>
                                 </div>

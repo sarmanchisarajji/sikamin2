@@ -17,6 +17,7 @@ return new class extends Migration
             $table->enum('jenis_ujian', ['proposal', 'hasil', 'skripsi']);
             $table->string('judul');
             $table->string('ipk_sementara');
+            $table->enum('status', ['diajukan', 'disetujui', 'selesai'])->default('diajukan');
             $table->string('nilai_ujian')->nullable(); 
             $table->string('ketua_sidang')->nullable(); 
             $table->string('sekretaris_sidang')->nullable(); 
@@ -29,6 +30,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_penguji_2')->nullable(); 
             $table->unsignedBigInteger('id_penguji_3')->nullable(); 
             $table->string('hari_ujian')->nullable(); 
+            $table->date('tanggal_ujian')->nullable(); 
             $table->string('jam_ujian')->nullable(); 
             $table->string('tempat_ujian')->nullable(); 
             $table->string('ba')->nullable(); // berita acara

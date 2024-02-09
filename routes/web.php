@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\UjianController;
+use App\Http\Controllers\FilebuktiController;
 use App\Http\Controllers\MahasiswaController;
 
 /*
@@ -34,13 +35,27 @@ Route::middleware(['auth'])->group(function () {
     // Route Mahasiswa
     Route::middleware(['can:mahasiswa'])->group(function () {
         Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'index']);
-        Route::get('/mahasiswa/profil', [MahasiswaController::class, 'profil']);
 
+        // Profil
+        Route::get('/mahasiswa/profil', [MahasiswaController::class, 'profil']);
+        Route::put('/mahasiswa/profil/update-foto', [MahasiswaController::class, 'updateFotoProfil']);
+        Route::put('/mahasiswa/profil/update-data', [MahasiswaController::class, 'updateDataProfil']);
+        
+        // Ganti Password
+        Route::put('/mahasiswa/profil/ganti-password', [AuthController::class, 'passwordMahasiswa']);
+
+        // Pengajuan Ujian
         Route::get('/mahasiswa/pengajuan-ujian', [UjianController::class, 'pengajuanUjianMahasiswa']);
         Route::get('/mahasiswa/form-ujian/{id?}', [UjianController::class, 'formUjianMahasiswa']);
         Route::post('/mahasiswa/pengajuan-ujian/store', [UjianController::class, 'storeUjianMahasiswa']);
         Route::put('/mahasiswa/pengajuan-ujian/update/{id}', [UjianController::class, 'updateUjianMahasiswa']);
         Route::delete('/mahasiswa/pengajuan-ujian/delete/{id}', [UjianController::class, 'deleteUjianMahasiswa']);
+        
+        // File Bukti Pendukung
+        Route::get('/mahasiswa/pengajuan-ujian/bukti-dukung/{id_ujian}', [FilebuktiController::class, 'indexMahasiswa']);
+        Route::post('/mahasiswa/pengajuan-ujian/bukti-dukung/{id_ujian}/store', [FilebuktiController::class, 'storeBuktiMahasiswa']);
+        Route::put('/mahasiswa/pengajuan-ujian/bukti-dukung/{id_ujian}/update/{id}', [FilebuktiController::class, 'updateBuktiMahasiswa']);
+        Route::delete('/mahasiswa/pengajuan-ujian/bukti-dukung/{id_ujian}/delete/{id}', [FilebuktiController::class, 'deleteBuktiMahasiswa']);
 
         Route::get('/mahasiswa/monitoring-ujian', [UjianController::class, 'monitoringUjianMahasiswa']);
     });
