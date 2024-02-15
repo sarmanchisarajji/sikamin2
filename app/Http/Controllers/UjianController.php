@@ -3,19 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dosen;
-use App\Models\Mahasiswa;
 use App\Models\Ujian;
+use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UjianController extends Controller
 {
     // MAHASISWA
-    public function pengajuanUjianMahasiswa()
+    public function index()
     {
+        $title = 'Menghapus Data!';
+        $text = "Apakah yakin ingin menghapus data?";
+        confirmDelete($title, $text);
+
         $mahasiswa = Mahasiswa::where('id_user', Auth::user()->id)->first();
         $ujians = $mahasiswa->ujian;
-        return view('mahasiswa.pengajuan-ujian',[
+        return view('mahasiswa.pengajuan-ujian', [
             'mahasiswa' => $mahasiswa,
             'ujians' => $ujians
         ]);
@@ -26,7 +31,7 @@ class UjianController extends Controller
         $mahasiswa = Mahasiswa::where('id_user', Auth::user()->id)->first();
         $dosens = Dosen::all();
         $ujian = null;
-        if(isset($id)){
+        if (isset($id)) {
             $ujian = Ujian::findOrFail($id);
         }
         // dd($dosens);
@@ -37,7 +42,8 @@ class UjianController extends Controller
         ]);
     }
 
-    public function storeUjianMahasiswa(Request $request){
+    public function storeUjianMahasiswa(Request $request)
+    {
         $validatedData = $request->validate([
             'id_mahasiswa' => 'required',
             'judul' => 'required',
@@ -63,10 +69,13 @@ class UjianController extends Controller
             'id_pembimbing_2' => $validatedData['id_pembimbing_2'],
         ]);
 
-        return redirect('mahasiswa/pengajuan-ujian')->with('success','Data berhasil ditambahkan');
+        Alert::success('Data berhasil ditambahkan', session('success'));
+        return redirect('mahasiswa/pengajuan-ujian');
+        // return redirect('mahasiswa/pengajuan-ujian')->with('success','Data berhasil ditambahkan');
     }
 
-    public function updateUjianMahasiswa(Request $request, $id){
+    public function updateUjianMahasiswa(Request $request, $id)
+    {
         $ujian = Ujian::findOrFail($id);
         $validatedData = $request->validate([
             'id_mahasiswa' => 'required',
@@ -93,27 +102,32 @@ class UjianController extends Controller
             'id_pembimbing_2' => $validatedData['id_pembimbing_2'],
         ]);
 
-        return redirect('mahasiswa/pengajuan-ujian')->with('success','Data berhasil diupdate');
+        Alert::success('Data berhasil diupdate', session('success'));
+        return redirect('mahasiswa/pengajuan-ujian');
+        // return redirect('mahasiswa/pengajuan-ujian')->with('success', 'Data berhasil diupdate');
     }
+    // }
 
-    public function deleteUjianMahasiswa($id){
+    public function deleteUjianMahasiswa($id)
+    {
         $ujian = Ujian::findOrFail($id);
         $ujian->delete();
 
-        return redirect('mahasiswa/pengajuan-ujian')->with('success','Data berhasil dihapus');
+        Alert::success('Data berhasil dihapus', session('success'));
+        return redirect('mahasiswa/pengajuan-ujian');
+        // return redirect('mahasiswa/pengajuan-ujian')->with('success', 'Data berhasil dihapus');
     }
 
     public function monitoringUjianMahasiswa()
-    {  
+    {
         $mahasiswa = Mahasiswa::where('id_user', Auth::user()->id)->first();
         $ujians = $mahasiswa->ujian()
-                            ->whereIn('status', ['disetujui', 'selesai'])
-                            ->orderBy('tanggal_ujian', 'desc')
-                            ->get();
+            ->whereIn('status', ['disetujui', 'selesai'])
+            ->orderBy('tanggal_ujian', 'desc')
+            ->get();
         return view('mahasiswa.monitoring-ujian', [
             'mahasiswa' => $mahasiswa,
             'ujians' => $ujians
         ]);
     }
-
 }
