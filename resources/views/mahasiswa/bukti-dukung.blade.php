@@ -50,17 +50,29 @@
                                         <tr class="text-center">
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
-                                                <span><button class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                                <span>
+                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                                         data-bs-target="#editBuktiModal{{ $bukti->id }}" title="Edit">
-                                                        <i class="fas fa-edit"></i></button></span>
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                </span>
                                                 <form class="d-inline"
                                                     action="{{ url("mahasiswa/pengajuan-ujian/bukti-dukung/$id_ujian/delete/$bukti->id") }}"
-                                                    method="POST">
+                                                    method="POST" id="deleteFile{{ $bukti->id }}">
                                                     @method('delete')
                                                     @csrf
-                                                    <span><button onclick="return confirm('Lanjutkan untuk menghapus?')"
+                                                    {{-- <span>
+                                                        <button onclick="return confirm('Lanjutkan untuk menghapus?')"
                                                             type="submit" class="btn btn-sm btn-danger" title="Hapus">
-                                                            <i class="fas  fa-trash"></i></button></span>
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </span> --}}
+                                                    <span>
+                                                        <button type="button" class="btn btn-sm btn-danger"
+                                                            onclick="confirmDelete('{{ $bukti->id }}')" title="Hapus">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </span>
                                                 </form>
                                             </td>
                                             <td class="text-start text-wrap">{{ $bukti->nama_berkas }}</td>
@@ -200,4 +212,23 @@
             </div>
         </div>
     </div>
+    <script>
+        function confirmDelete(buktiId) {
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: 'Apakah Anda yakin ingin menghapus?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal!',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Jika pengguna menekan "Ya", kirim formulir
+                    document.getElementById('deleteFile' + buktiId).submit();
+                }
+            });
+        }
+    </script>
 @endsection

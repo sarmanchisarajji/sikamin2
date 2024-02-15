@@ -45,7 +45,7 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/mahasiswa/profil/ganti-password', [AuthController::class, 'passwordMahasiswa']);
 
         // Pengajuan Ujian
-        Route::get('/mahasiswa/pengajuan-ujian', [UjianController::class, 'pengajuanUjianMahasiswa']);
+        Route::get('/mahasiswa/pengajuan-ujian', [UjianController::class, 'index']);
         Route::get('/mahasiswa/form-ujian/{id?}', [UjianController::class, 'formUjianMahasiswa']);
         Route::post('/mahasiswa/pengajuan-ujian/store', [UjianController::class, 'storeUjianMahasiswa']);
         Route::put('/mahasiswa/pengajuan-ujian/update/{id}', [UjianController::class, 'updateUjianMahasiswa']);

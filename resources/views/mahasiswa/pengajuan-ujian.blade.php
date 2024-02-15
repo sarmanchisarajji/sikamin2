@@ -52,17 +52,25 @@
                                         <tr class="text-center">
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
-                                                <span><a href="{{ url("/mahasiswa/form-ujian/$ujian->id") }}"><button
-                                                            class="btn btn-sm btn-warning" title="Edit">
-                                                            <i class="fas fa-edit"></i></button></a></span>
+                                                <span>
+                                                    <a href="{{ url("/mahasiswa/form-ujian/$ujian->id") }}">
+                                                        <button class="btn btn-sm btn-warning" title="Edit">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
+                                                    </a>
+                                                </span>
                                                 <form class="d-inline"
                                                     action="{{ url("mahasiswa/pengajuan-ujian/delete/$ujian->id") }}"
-                                                    method="POST">
-                                                    @method('delete')
+                                                    method="POST" id="deleteUjian{{ $ujian->id }}">
                                                     @csrf
-                                                    <span><button onclick="return confirm('Lanjutkan untuk menghapus?')"
-                                                            type="submit" class="btn btn-sm btn-danger" title="Hapus">
-                                                            <i class="fas  fa-trash"></i></button></span>
+                                                    @method('delete')
+                                                    <span>
+                                                        <button type="button"
+                                                            class="btn btn-sm btn-danger"
+                                                            onclick="confirmDelete('{{ $ujian->id }}')" title="Hapus">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </span>
                                                 </form>
                                                 <div class="mt-1"><a
                                                         href="{{ url("/mahasiswa/pengajuan-ujian/bukti-dukung/$ujian->id") }}"><button
@@ -102,4 +110,23 @@
             </div>
         </div>
     </div>
+    <script>
+        function confirmDelete(ujianId) {
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: 'Apakah Anda yakin ingin menghapus?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal!',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Jika pengguna menekan "Ya", kirim formulir
+                    document.getElementById('deleteUjian' + ujianId).submit();
+                }
+            });
+        }
+    </script>
 @endsection

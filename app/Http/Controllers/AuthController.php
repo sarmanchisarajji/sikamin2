@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AuthController extends Controller
 {
@@ -64,9 +65,10 @@ class AuthController extends Controller
         return redirect('/login')->with('success', 'Berhasil Logout');
     }
 
-    public function passwordMahasiswa(Request $request){
+    public function passwordMahasiswa(Request $request)
+    {
         $user = Auth::user();
-        
+
         $validatedData = $request->validate([
             'old_password' => 'required',
             'new_password' => 'required|min:8',
@@ -86,6 +88,8 @@ class AuthController extends Controller
         $user->password = Hash::make($validatedData['new_password']);
         $user->save();
 
-        return redirect()->back()->with('success', 'Kata sandi berhasil diperbarui');
+        Alert::success('Kata sandi berhasil diperbarui', session('success'));
+        return redirect()->back();
+        // return redirect()->back()->with('success', 'Kata sandi berhasil diperbarui');
     }
 }

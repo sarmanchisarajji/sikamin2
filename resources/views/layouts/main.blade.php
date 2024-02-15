@@ -35,6 +35,8 @@
         <div class="page-wrapper">
             @yield('main-contents')
 
+            @include('sweetalert::alert')
+
             @include('layouts.footer')
         </div>
     </div>
@@ -48,6 +50,8 @@
     <script src="{{ asset('') }}assets/js/script.js"></script>
     <script src="{{ asset('') }}assets/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="{{ asset('') }}assets/plugins/datatables/datatables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
     <script>
         $("#example").DataTable({
             "responsive": true,
