@@ -30,6 +30,7 @@ class User extends Authenticatable
         'no_hp',
         'user_type',
         'is_aktif',
+        'foto'
     ];
 
     /**
