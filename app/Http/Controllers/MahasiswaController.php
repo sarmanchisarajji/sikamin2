@@ -50,7 +50,7 @@ class MahasiswaController extends Controller
             if ($foto != null) {
                 Storage::delete($user->foto);
             }
-            $foto = $request->file('foto')->store('storage');
+            $foto = $request->file('foto')->store('foto-profil');
         }
 
         $user->update([
