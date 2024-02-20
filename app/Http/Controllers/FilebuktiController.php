@@ -67,7 +67,7 @@ class FilebuktiController extends Controller
 
         if ($request->file('file')) {
             Storage::delete($bukti->file);
-            $file = $request->file('file')->store('bukti-dukung');
+            $file = $request->file('file')->store('file-bukti');
         };
 
         $bukti->update([
@@ -83,6 +83,10 @@ class FilebuktiController extends Controller
     public function deleteBuktiMahasiswa($id_ujian, $id)
     {
         $bukti = Filebukti::findOrFail($id);
+
+        // Hapus file terkait dari penyimpanan
+        Storage::delete($bukti->file);
+
         $bukti->delete();
 
         Alert::success('Data berhasil dihapus', session('success'));
