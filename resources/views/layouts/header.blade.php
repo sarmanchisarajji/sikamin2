@@ -11,7 +11,7 @@
         <a href="javascript:void(0);" id="toggle_btn">
             <i class="fas fa-bars"></i>
         </a>
-</div>
+    </div>
 
     <a class="mobile_btn" id="mobile_btn">
         <i class="fas fa-bars"></i>
@@ -21,8 +21,13 @@
         <li class="nav-item dropdown has-arrow new-user-menus">
             <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                 <span class="user-img">
+                    @if (Auth::user()->foto == null)
+                    <img class="rounded-circle" src="{{ asset('assets/img/profile-default.jpeg')  }}" width="31"
+                        alt="{{ Auth::user()->nama_pengguna }}">
+                    @else
                     <img class="rounded-circle" src="{{ asset('storage/' . Auth::user()->foto) }}" width="31"
                         alt="{{ Auth::user()->nama_pengguna }}">
+                    @endif
                     <div class="user-text">
                         <h6>{{ Auth::user()->nama_pengguna }}</h6>
                         <p class="text-muted mb-0">{{ Str::ucfirst(Auth::user()->user_type) }}</p>
