@@ -288,7 +288,6 @@ class StaffController extends Controller
     {
         $file = Filebukti::where('id_ujian', $id)->get();
         $mahasiswa = Ujian::where('id', $id)->get();
-        // dd($mahasiswa);
         return view('staff.bukti_dukung', [
             'file' => $file,
             'mahasiswa' => $mahasiswa
