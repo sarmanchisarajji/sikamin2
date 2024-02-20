@@ -5,10 +5,11 @@
       <div class="row align-items-center">
          <div class="col-sm-12">
             <div class="page-sub-header">
-               <h3 class="page-title">Tambah Mahsiswa</h3>
+               <h3 class="page-title">{{ isset($mahasiswa) ? 'Edit Mahasiswa' : 'Tambah Mahasiswa' }}</h3>
                <ul class="breadcrumb">
                   <li class="breadcrumb-item"><a href="{{ route('s-mahasiswa-index') }}">Mahasiswa</a></li>
-                  <li class="breadcrumb-item active">Tambah Mahasiswa</li>
+                  <li class="breadcrumb-item active">{{ isset($mahasiswa) ? 'Edit Mahasiswa' : 'Tambah Mahasiswa' }}
+                  </li>
                </ul>
             </div>
          </div>
@@ -18,7 +19,12 @@
       <div class="col-sm-12">
          <div class="card comman-shadow">
             <div class="card-body">
-               <form action="{{ route('s-mahasiswa-store') }}" method="POST">
+               <form
+                  action="{{ isset($mahasiswa) ? route('s-mahasiswa-update', $mahasiswa->user->id) : route('s-mahasiswa-store') }}"
+                  method="POST">
+                  @isset($mahasiswa)
+                  @method('PUT')
+                  @endisset
                   @csrf
                   <div class="col-12">
                      <h5 class="form-title student-info">Data Mahasiswa</h5>
@@ -27,8 +33,8 @@
                      <div class="col-12 col-sm-6">
                         <div class="form-group local-forms">
                            <label>Nama Mahasiswa <span class="login-danger">*</span></label>
-                           <input type="text" class="form-control @error('nama') is-invalid @enderror"
-                              name="nama" placeholder="" value="{{ old('nama') }}">
+                           <input type="text" class="form-control @error('nama') is-invalid @enderror" name="nama"
+                              placeholder="" value="{{ isset($mahasiswa) ? $mahasiswa->nama : '' }}">
                            @error('nama')
                            <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong trong>
@@ -40,7 +46,7 @@
                         <div class="form-group local-forms">
                            <label>NIM <span class="login-danger">*</span></label>
                            <input type="text" class="form-control @error('nim') is-invalid @enderror" name="nim"
-                              placeholder="" value="{{ old('nim') }}">
+                              placeholder="" value="{{ isset($mahasiswa) ? $mahasiswa->nim : '' }}">
                            @error('nim')
                            <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>
@@ -53,8 +59,9 @@
                      <div class="col-12 col-sm-6">
                         <div class="form-group local-forms">
                            <label>Tahun Masuk <span class="login-danger">*</span></label>
-                           <input type="text" class="form-control @error('tahun_masuk') is-invalid @enderror" name="tahun_masuk"
-                              placeholder="" value="{{ old('tahun_masuk') }}">
+                           <input type="text" class="form-control @error('tahun_masuk') is-invalid @enderror"
+                              name="tahun_masuk" placeholder=""
+                              value="{{ isset($mahasiswa) ? $mahasiswa->tahun_masuk : '' }}">
                            @error('tahun_masuk')
                            <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>
@@ -67,8 +74,13 @@
                            <label>Status <span class="login-danger">*</span></label>
                            <select class="form-control select  @error('status') is-invalid @enderror" name="status">
                               <option selected disabled>Pilih status</option>
-                              <option value="aktif" {{ old('status')=='aktif' ? "selected" :"Female"}}>Aktif</option>
-                              <option value="tidak aktif" {{ old('status')=='tidak aktif' ? "selected" :""}}>Tidak Aktif
+
+                              <option value="aktif" {{ isset($mahasiswa) ? $mahasiswa->user->is_aktif == 'y' ?
+                                 "selected" :"" : ''}}>Aktif
+                              </option>
+                              <option value="tidak aktif" {{ isset($mahasiswa) ? $mahasiswa->user->is_aktif == 'n' ?
+                                 "selected" :"" : ''
+                                 }}>Tidak Aktif
                               </option>
                            </select>
                            @error('status')
@@ -90,7 +102,8 @@
                         <div class="form-group local-forms">
                            <label>Username <span class="login-danger">*</span></label>
                            <input type="text" class="form-control @error('username') is-invalid @enderror"
-                              name="username" placeholder="" value="{{ old('username') }}">
+                              name="username" placeholder=""
+                              value="{{ isset($mahasiswa) ? $mahasiswa->user->username : '' }}">
                            @error('username')
                            <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>
@@ -101,8 +114,8 @@
                      <div class="col-12 col-sm-6">
                         <div class="form-group local-forms">
                            <label>Password <span class="login-danger">*</span></label>
-                           <input type="text" class="form-control @error('password') is-invalid @enderror"
-                              name="password" placeholder="" value="{{ old('password') }}">
+                           <input type="password" class="form-control @error('password') is-invalid @enderror"
+                              name="password" placeholder="">
                            @error('password')
                            <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>
@@ -122,4 +135,5 @@
       </div>
    </div>
 </div>
+
 @endsection

@@ -15,20 +15,6 @@
       </div>
    </div>
    {{-- message --}}
-   <div class="student-group-form">
-      <div class="row">
-         <div class="col-lg-10 col-md-10">
-            <div class="form-group">
-               <input type="text" class="form-control" placeholder="Cari">
-            </div>
-         </div>
-         <div class="col-lg-2">
-            <div class="search-student-btn">
-               <button type="btn" class="btn btn-primary">Cari</button>
-            </div>
-         </div>
-      </div>
-   </div>
    <div class="row">
       <div class="col-sm-12">
          <div class="card card-table comman-shadow">
@@ -41,22 +27,21 @@
                      <div class="col-auto text-end float-end ms-auto download-grp">
                         <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i>
                            Download</a>
-                        <a href="{{ route('s-dosen-create') }}" class="btn btn-primary"><i
-                              class="fas fa-plus"></i></a>
+                        <a href="{{ route('s-dosen-create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                      </div>
                   </div>
                </div>
-
                <div class="table-responsive">
-                  <table class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
+                  <table id="example" class="display table table-hover table-striped" style="width:100%">
                      <thead class="student-thread">
                         <tr class="text-center">
-                           <th>No</th>
-                           <th>Nama</th>
-                           <th>NIP</th>
-                           <th>NIDN</th>
-                           <th>Status</th>
-                           <th>Action</th>
+                           <th style="background-color: #3d5ee1" class="text-white">No</th>
+                           <th style="background-color: #3d5ee1" class="text-white">Nama</th>
+                           <th style="background-color: #3d5ee1" class="text-white">NIP</th>
+                           <th style="background-color: #3d5ee1" class="text-white">NIDN</th>
+                           <th style="background-color: #3d5ee1" class="text-white">Jabatan</th>
+                           <th style="background-color: #3d5ee1" class="text-white">Status</th>
+                           <th style="background-color: #3d5ee1" class="text-white col-2">Action</th>
                         </tr>
                      </thead>
                      <tbody class="text-center">
@@ -66,16 +51,28 @@
                            <td>{{ $item->nama_dosen }}</td>
                            <td>{{ $item->nip }}</td>
                            <td>{{ $item->nidn }}</td>
-                           <td><span>{{ $item->status }}</span></td>
+                           <td>{{ $item->jabatan_akademik }}</td>
+                           <td><span
+                                 class="{{ $item->status == 'aktif' ? 'bg-info' : 'bg-warning' }} text-white px-3 rounded-pill">{{
+                                 $item->status }}</span>
+                           </td>
                            <td>
                               <div>
-                                 <a href="{{ url('dosen/edit/'.$item->id) }}" class="btn btn-sm bg-danger-light">
+                                 <a href="{{ route('s-dosen-edit', $item->user->id) }}"
+                                    class="btn btn-sm bg-danger-light">
                                     <i class="feather-edit"></i>
                                  </a>
-                                 <a class="btn btn-sm bg-danger-light student_delete" data-bs-toggle="modal"
-                                    data-bs-target="#studentUser">
-                                    <i class="feather-trash-2 me-1"></i>
-                                 </a>
+                                 <form class="d-inline" action="{{ route('s-dosen-delete', $item->user->id) }}"
+                                    method="POST" id="deleteDosen{{ $item->user->id }}">
+                                    @method('delete')
+                                    @csrf
+                                    <span>
+                                       <button type="button" onclick="confirmDelete({{ $item->user->id}})"
+                                          class="btn btn-sm bg-danger-light" title="Hapus">
+                                          <i class="feather-trash-2 me-1"></i>
+                                       </button>
+                                    </span>
+                                 </form>
                               </div>
                            </td>
                         </tr>
@@ -88,4 +85,22 @@
       </div>
    </div>
 </div>
+<script>
+   function confirmDelete(id) {
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: 'Apakah Anda yakin ingin menghapus?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal!',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('deleteDosen' + id).submit();
+                }
+            });
+        }
+</script>
 @endsection

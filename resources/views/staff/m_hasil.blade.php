@@ -8,7 +8,7 @@
                <h3 class="page-title">Monitoring Ujian</h3>
                <ul class="breadcrumb">
                   <li class="breadcrumb-item"><a href="">Monitoring Ujian</a></li>
-                  <li class="breadcrumb-item active">Proposal</li>
+                  <li class="breadcrumb-item active">Hasil</li>
                </ul>
             </div>
          </div>
@@ -17,11 +17,11 @@
 
    <div class="settings-menu-links">
       <ul class="nav nav-tabs menu-tabs">
-         <li class="nav-item active">
+         <li class="nav-item">
             <a class="nav-link" href="{{ route('s-m_proposal-index') }}">Proposal</a>
          </li>
-         <li class="nav-item ">
-            <a class="nav-link" href="{{ route('s-m_hasil-index') }}">Hasil</a>
+         <li class="nav-item active">
+            <a class="nav-link " href="{{ route('s-m_hasil-index') }}">Hasil</a>
          </li>
          <li class="nav-item ">
             <a class="nav-link" href="">Skripsi</a>

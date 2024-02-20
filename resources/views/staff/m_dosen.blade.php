@@ -14,7 +14,6 @@
          </div>
       </div>
    </div>
-   {{-- message --}}
    <div class="student-group-form">
       <div class="row">
          <div class="col-lg-10 col-md-10">
@@ -29,18 +28,31 @@
          </div>
       </div>
    </div>
-   <div class="row d-flex justify-content-between flex-wrap">
-      <div class="card col-sm-12 py-3 px-3 d-flex flex-row gap-3" style="width: 32%">
-        <div class="image bg-dark" style="width: 100px; border-radius: 9px"></div>
-         <div>
-            <h4>Nama Dosen</h4>
-            <p class="badge badge-info rounded-pill" style="font-size: 14px">status</p>
-            <h6 class="badge-primary px-2 rounded-pill text-white">Sebagai Pembimbing  : 10</h6>
-            <div>
-               <h6 class="badge-danger px-2 rounded-pill text-white">Sebagai Penguji: 15</h6>
+   <div class="row d-flex justify-content-evenly flex-wrap gap-1">
+      @foreach ($dosen as $item)
+      <div class="card px-2 py-2 d-flex flex-row align-items-center gap-3 bg-white col-5">
+         <img src="{{ asset('/assets/img/default-dosen.jpg') }}" alt="" width="150" style="border-radius: 6px">
+         <div class="w-100">
+            <p class="fs-5 fw-bold">{{ $item->nama_dosen }}</p>
+            <p class="fw-bold text-secondary" style="margin-top: -20px">Teknik Informatika</p>
+            <div class="d-flex justify-content-evenly px-3 py-1"
+               style="border-radius: 6px; background-color: #e7ebee; margin-top: -10px">
+               <div>
+                  <p class="py-0 my-0">Penguji<br><span class="fs-5 fw-bold">102</span></p>
+               </div>
+               <div>
+                  <span style="border: 1px solid black; display: inline-block; height: 100%"></span>
+               </div>
+               <div>
+                  <p class="py-0 my-0">Pembimbing<br><span class="fs-5 fw-bold">36</span></p>
+               </div>
+            </div>
+            <div class="mt-2">
+               <a class="btn btn-primary w-100" href="">Lihat Detail</a>
             </div>
          </div>
       </div>
+      @endforeach
    </div>
 </div>
 @endsection

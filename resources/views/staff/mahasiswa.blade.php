@@ -13,21 +13,6 @@
          </div>
       </div>
    </div>
-   {{-- message --}}
-   <div class="student-group-form">
-      <div class="row">
-         <div class="col-lg-10 col-md-10">
-            <div class="form-group">
-               <input type="text" class="form-control" placeholder="Cari">
-            </div>
-         </div>
-         <div class="col-lg-2">
-            <div class="search-student-btn">
-               <button type="btn" class="btn btn-primary">Cari</button>
-            </div>
-         </div>
-      </div>
-   </div>
    <div class="row">
       <div class="col-sm-12">
          <div class="card card-table comman-shadow">
@@ -45,17 +30,16 @@
                      </div>
                   </div>
                </div>
-
                <div class="table-responsive">
-                  <table class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
+                  <table id="example" class="display table table-hover table-striped" style="width:100%">
                      <thead class="student-thread">
                         <tr class="text-center">
-                           <th class="col-1">No</th>
-                           <th class="col-4">Nama</th>
-                           <th class="col-2">NIM</th>
-                           <th class="col-2">Tahun Masuk</th>
-                           <th class="col-1">Status</th>
-                           <th class="col-2">Action</th>
+                           <th style="background-color: #3d5ee1" class="text-white" class="col-1">No</th>
+                           <th style="background-color: #3d5ee1" class="text-white" class="col-4">Nama</th>
+                           <th style="background-color: #3d5ee1" class="text-white" class="col-2">NIM</th>
+                           <th style="background-color: #3d5ee1" class="text-white" class="col-2">Tahun Masuk</th>
+                           <th style="background-color: #3d5ee1" class="text-white" class="col-1">Status</th>
+                           <th style="background-color: #3d5ee1" class="text-white" class="col-2">Action</th>
                         </tr>
                      </thead>
                      <tbody class="text-center">
@@ -65,16 +49,26 @@
                            <td>{{ $item->nama }}</td>
                            <td>{{ $item->nim }}</td>
                            <td>{{ $item->tahun_masuk }}</td>
-                           <td><span class="{{ $item->user->is_aktif == 'y' ? 'bg-info' : 'bg-warning' }} px-3 text-white rounded-pill">{{ $item->user->is_aktif == 'y' ? 'Aktif' : 'Tidak Aktif' }}</span></td>
+                           <td><span
+                                 class="{{ $item->user->is_aktif == 'y' ? 'bg-info' : 'bg-warning' }} px-3 text-white rounded-pill">{{
+                                 $item->user->is_aktif == 'y' ? 'Aktif' : 'Tidak Aktif' }}</span></td>
                            <td>
                               <div>
-                                 <a href="{{ url('dosen/edit/'.$item->id) }}" class="btn btn-sm bg-danger-light">
+                                 <a href="{{ route('s-mahasiswa-edit', $item->user->id) }}"
+                                    class="btn btn-sm bg-danger-light">
                                     <i class="feather-edit"></i>
                                  </a>
-                                 <a class="btn btn-sm bg-danger-light student_delete" data-bs-toggle="modal"
-                                    data-bs-target="#studentUser">
-                                    <i class="feather-trash-2 me-1"></i>
-                                 </a>
+                                 <form class="d-inline" action="{{ route('s-mahasiswa-delete', $item->user->id) }}"
+                                    method="POST" id="deleteMhs{{ $item->user->id }}">
+                                    @method('delete')
+                                    @csrf
+                                    <span>
+                                       <button type="button" onclick="confirmDelete({{ $item->user->id}})"
+                                          class="btn btn-sm bg-danger-light" title="Hapus">
+                                          <i class="feather-trash-2 me-1"></i>
+                                       </button>
+                                    </span>
+                                 </form>
                               </div>
                            </td>
                         </tr>
@@ -87,4 +81,22 @@
       </div>
    </div>
 </div>
+<script>
+   function confirmDelete(id) {
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: 'Apakah Anda yakin ingin menghapus?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal!',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('deleteMhs' + id).submit();
+                }
+            });
+        }
+</script>
 @endsection
