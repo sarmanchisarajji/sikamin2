@@ -47,7 +47,7 @@
                                     <tbody>
                                         @foreach ($listBimbingan as $key => $mahasiswa)
                                         <tr>
-                                            <td hidden class="user_id">{{ $mahasiswa->user_id }}</td>
+                                            <td hidden class="id_user">{{ $mahasiswa->id_user }}</td>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $mahasiswa->nama }}</td>
                                             <td>{{ $mahasiswa->nim }}</td>
