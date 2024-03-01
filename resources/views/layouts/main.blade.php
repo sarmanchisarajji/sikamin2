@@ -35,7 +35,7 @@
             @yield('main-contents')
 
             <footer>
-                <p>Copyright © 2024 Dreamguys.</p>
+                <p>Copyright © 2024 Teknik Informatika.</p>
             </footer>
         </div>
     </div>

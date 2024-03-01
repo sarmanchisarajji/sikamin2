@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DosenController;
 use App\Http\Controllers\StaffController;
 
 /*
@@ -34,8 +35,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Route Dosen
     Route::middleware(['can:dosen'])->group(function () {
-        Route::get('/dosen/dashboard', function () {
-            return view('dosen.index');
-        });
+        Route::get('/dosen/dashboard', [DosenController::class, 'dashboard'])->name('dosen.dashboard');
+        Route::get('/dosen/mahasiswa-bimbingan/list', [DosenController::class, 'mahasiswaBimbinganList'])->name('dosen.mahasiswa_bimbingan.list');
     });
 });
