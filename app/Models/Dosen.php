@@ -10,9 +10,11 @@ class Dosen extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['nama_dosen', 'nip', 'nidn', 'jabatan_akademik', 'tmt_akademik', 'status', 'pangkat', 'tmt_pangkat', 'pendidikan_terakhir', 'id_user'];
+
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'id_user');
     }
 
     public function pembimbing_1()

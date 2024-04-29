@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AuthController extends Controller
 {
@@ -61,5 +63,33 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/login')->with('success', 'Berhasil Logout');
+    }
+
+    public function passwordMahasiswa(Request $request)
+    {
+        $user = Auth::user();
+
+        $validatedData = $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|min:8',
+            'confirm_new_password' => 'required|same:new_password',
+        ], [
+            'old_password.required' => 'Kata sandi lama wajib diisi.',
+            'new_password.required' => 'Kata sandi baru wajib diisi.',
+            'new_password.min' => 'Kata sandi baru minimal terdiri dari 8 karakter.',
+            'confirm_new_password.required' => 'Konfirmasi kata sandi baru wajib diisi.',
+            'confirm_new_password.same' => 'Konfirmasi kata sandi baru harus sama dengan kata sandi baru.',
+        ]);
+
+        if (!Hash::check($validatedData['old_password'], $user->password)) {
+            return redirect()->back()->withErrors(['old_password' => 'Kata sandi lama salah.'])->withInput();
+        }
+
+        $user->password = Hash::make($validatedData['new_password']);
+        $user->save();
+
+        Alert::success('Kata sandi berhasil diperbarui', session('success'));
+        return redirect()->back();
+        // return redirect()->back()->with('success', 'Kata sandi berhasil diperbarui');
     }
 }

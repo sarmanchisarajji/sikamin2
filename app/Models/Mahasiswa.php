@@ -20,6 +20,9 @@ class Mahasiswa extends Model
         'pembimbing_2_id',
     ];
 
+    protected $guarded = [''];
+
+
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user');
