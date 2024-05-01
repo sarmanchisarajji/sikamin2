@@ -18,31 +18,32 @@ return new class extends Migration
             $table->string('judul');
             $table->string('ipk_sementara');
             $table->enum('status', ['diajukan', 'disetujui', 'selesai'])->default('diajukan');
-            $table->string('nilai_ujian')->nullable(); 
-            $table->string('ketua_sidang')->nullable(); 
-            $table->string('sekretaris_sidang')->nullable(); 
-            $table->string('anggota_1')->nullable(); 
-            $table->string('anggota_2')->nullable(); 
-            $table->string('anggota_3')->nullable(); 
+            $table->string('nilai_ujian')->nullable();
+            $table->string('ketua_sidang')->nullable();
+            $table->string('sekretaris_sidang')->nullable();
+            $table->string('anggota_1')->nullable();
+            $table->string('anggota_2')->nullable();
+            $table->string('anggota_3')->nullable();
             $table->unsignedBigInteger('id_pembimbing_1');
             $table->unsignedBigInteger('id_pembimbing_2');
-            $table->unsignedBigInteger('id_penguji_1')->nullable(); 
-            $table->unsignedBigInteger('id_penguji_2')->nullable(); 
-            $table->unsignedBigInteger('id_penguji_3')->nullable(); 
-            $table->string('hari_ujian')->nullable(); 
-            $table->date('tanggal_ujian')->nullable(); 
-            $table->string('jam_ujian')->nullable(); 
-            $table->string('tempat_ujian')->nullable(); 
+            $table->unsignedBigInteger('id_penguji_1')->nullable();
+            $table->unsignedBigInteger('id_penguji_2')->nullable();
+            $table->unsignedBigInteger('id_penguji_3')->nullable();
+            $table->string('hari_ujian')->nullable();
+            $table->date('tanggal_ujian')->nullable();
+            $table->string('jam_ujian')->nullable();
+            $table->string('tempat_ujian')->nullable();
             $table->string('ba')->nullable(); // berita acara
             $table->string('st')->nullable(); // surat tugas ujian
             $table->string('sp')->nullable(); // surat penunjukan pembimbing
             $table->string('sk')->nullable(); // surat keterangan ujian
             $table->string('lp')->nullable(); // lembar penilaian
-            $table->string('no_sp')->nullable(); 
-            $table->string('no_st')->nullable(); 
-            $table->string('no_sk')->nullable(); 
-            $table->string('nama_ttd')->nullable(); 
-            $table->enum('plhplt', ['PLH', 'PLT', ''])->nullable(); 
+            $table->string('no_sk_pembimbing')->nullable();
+            $table->string('no_sk_penguji')->nullable();
+            $table->string('no_sp')->nullable();
+            $table->string('no_st')->nullable();
+            $table->string('nama_ttd')->nullable();
+            $table->enum('plhplt', ['PLH', 'PLT', ''])->nullable();
             $table->timestamps();
             $table->foreign('id_mahasiswa')->references('id')->on('mahasiswas')->onDelete('cascade');
             $table->foreign('id_pembimbing_1')->references('id')->on('dosens')->onDelete('cascade');
@@ -61,4 +62,3 @@ return new class extends Migration
         Schema::dropIfExists('ujians');
     }
 };
-

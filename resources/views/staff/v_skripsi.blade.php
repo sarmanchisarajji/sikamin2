@@ -8,7 +8,7 @@
                <h3 class="page-title">Verifikasi Ujian</h3>
                <ul class="breadcrumb">
                   <li class="breadcrumb-item"><a href="">Verifikasi Ujian</a></li>
-                  <li class="breadcrumb-item active">Proposal</li>
+                  <li class="breadcrumb-item active">Skripsi</li>
                </ul>
             </div>
          </div>
@@ -16,15 +16,15 @@
    </div>
 
    <div class="settings-menu-links">
-      <ul class="nav nav-tabs menu-tabs">
-         <li class="nav-item active">
+      <ul class="nav nav-tabs menu-tabs d-flex">
+         <li class="nav-item">
             <a class="nav-link" href="{{ route('s-v_proposal-index') }}">Proposal</a>
          </li>
-         <li class="nav-item ">
-            <a class="nav-link" href="">Hasil</a>
+         <li class="nav-item">
+            <a class="nav-link" href="{{ route('s-v_hasil-index') }}">Hasil</a>
          </li>
-         <li class="nav-item ">
-            <a class="nav-link" href="">Skripsi</a>
+         <li class="nav-item active">
+            <a class="nav-link" href="{{ route('s-v_skripsi-index') }}">Skripsi</a>
          </li>
       </ul>
    </div>
@@ -47,7 +47,7 @@
                         </tr>
                      </thead>
                      <tbody>
-                        @foreach ($proposal as $key => $item)
+                        @foreach ($skripsi as $key => $item)
                         <tr class="text-center">
                            <td>{{ $loop->iteration }}</td>
                            <td>{{ $item->mahasiswa->nama }}</td>
@@ -56,7 +56,8 @@
                            <td>{{ $item->status }}</td>
                            <td class="d-flex flex-column">
                               <div>
-                                 <a href="" class="btn text-white" style="background-color: orangered">Verifikasi</a>
+                                 <a href="{{ route('s-v_ujian_form', $item->id) }}" class="btn text-white"
+                                    style="background-color: orangered">Verifikasi</a>
                               </div>
                               <div>
                                  <a href="{{ route('s-bukti_dukung', ['id'=> $item->id]) }}" class="btn text-white"
@@ -69,15 +70,21 @@
                                  <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                     aria-expanded="false"><i class="fas fa-ellipsis-h"></i></a>
                                  <div class="dropdown-menu dropdown-menu-end fs-6">
-                                    <a class="dropdown-item py-2" href="{{ route('s-penunjukan_pembimbing') }}">Surat
-                                       Penunjukkan Pembimbing</a>
-                                    <a class="dropdown-item py-2" href="{{ route('s-tugas_ujian') }}">Surat Tugas
-                                       Ujian</a>
-                                    <a class="dropdown-item py-2" href="{{ route('s-berita_acara') }}">Berita Acara</a>
-                                    <a class="dropdown-item py-2" href="{{ route('s-keterangan_ujian') }}">Surat
-                                       Keterangan Ujian</a>
-                                    <a class="dropdown-item py-2" href="{{ route('s-lembar_penilaian') }}">Lembar
-                                       Penilaian</a>
+                                    <a class="dropdown-item py-2" href="{{ route('s-sk_pembimbing', $item->id) }}">
+                                       SK Pembimbing
+                                    </a>
+                                    <a class="dropdown-item py-2" href="{{ route('s-sk_penguji', $item->id) }}">
+                                       SK Penguji
+                                    </a>
+                                    <a class="dropdown-item py-2" href="{{ route('s-berita_acara_skripsi', $item->id) }}">
+                                       Berita Acara
+                                    </a>
+                                    <a class="dropdown-item py-2" href="{{ route('s-undangan_skripsi', $item->id) }}">
+                                       Undangan Skripsi
+                                    </a>
+                                    <a class="dropdown-item py-2" href="{{ route('s-berita_acara_skripsi', $item->id) }}">
+                                       Lembar Penilaian
+                                    </a>
                                  </div>
                               </div>
                            </td>
