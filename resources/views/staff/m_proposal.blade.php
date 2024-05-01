@@ -16,15 +16,18 @@
    </div>
 
    <div class="settings-menu-links">
-      <ul class="nav nav-tabs menu-tabs">
+      <ul class="nav nav-tabs menu-tabs d-flex">
+         <li class="nav-item">
+            <a class="nav-link" href="{{ route('s-m_ujian-index') }}">Semua</a>
+         </li>
          <li class="nav-item active">
             <a class="nav-link" href="{{ route('s-m_proposal-index') }}">Proposal</a>
          </li>
-         <li class="nav-item ">
+         <li class="nav-item">
             <a class="nav-link" href="{{ route('s-m_hasil-index') }}">Hasil</a>
          </li>
-         <li class="nav-item ">
-            <a class="nav-link" href="">Skripsi</a>
+         <li class="nav-item">
+            <a class="nav-link" href="{{ route('s-m_skripsi-index') }}">Skripsi</a>
          </li>
       </ul>
    </div>

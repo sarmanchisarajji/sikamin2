@@ -17,13 +17,13 @@
 
    <div class="settings-menu-links">
       <ul class="nav nav-tabs menu-tabs">
-         <li class="nav-item">
+         <li class="nav-item active">
             <a class="nav-link" href="{{ route('s-m_ujian-index') }}">Semua</a>
          </li>
          <li class="nav-item">
             <a class="nav-link" href="{{ route('s-m_proposal-index') }}">Proposal</a>
          </li>
-         <li class="nav-item active">
+         <li class="nav-item">
             <a class="nav-link " href="{{ route('s-m_hasil-index') }}">Hasil</a>
          </li>
          <li class="nav-item">
@@ -44,17 +44,16 @@
                            <th style="background-color: #3d5ee1" class="text-white col-3">Nama Lengkap</th>
                            <th style="background-color: #3d5ee1" class="text-white col-2">NIM</th>
                            <th style="background-color: #3d5ee1" class="text-white col-5">Judul</th>
-                           <th style="background-color: #3d5ee1" class="text-white col-1">Nilai Ujian</th>
+                           
                         </tr>
                      </thead>
                      <tbody>
-                        @foreach ($proposal as $key => $item)
+                        @foreach ($ujian as $key => $item)
                         <tr class="text-center">
                            <td>{{ $loop->iteration }}</td>
                            <td>{{ $item->mahasiswa->nama }}</td>
                            <td>{{ $item->mahasiswa->nim }}</td>
                            <td>{{ $item->judul }}</td>
-                           <td>{{ !$item->nilai_ujian ? '-' : $item->nilai_ujian}}</td>
                         </tr>
                         @endforeach
                      </tbody>

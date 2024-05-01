@@ -33,4 +33,5 @@ class Dosen extends Model
                     ->orWhere('id_penguji_3', $this->id);
             });
     }
+    
 }

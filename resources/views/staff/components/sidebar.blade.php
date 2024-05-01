@@ -40,12 +40,12 @@
                     </ul>
                 </li>
                 <li
-                    class="submenu {{ ($currentRoute == 's-m_proposal-index' || $currentRoute == 's-v_proposal-index') ? 'active' : '' }}">
+                    class="submenu {{ ($currentRoute == 's-m_ujian-index' || $currentRoute == 's-m_proposal-index' || $currentRoute == 's-m_hasil-index' || $currentRoute == 's-m_skripsi-index' || $currentRoute == 's-v_proposal-index') ? 'active' : '' }}">
                     <a href="#"><i class="fas fa-building"></i> <span> Ujian</span> <span class="menu-arrow"></span></a>
                     <ul>
                         <li
                             style="background-color:  {{ ($currentRoute == 's-m_proposal-index') ? '#3d5ee1' : '' }}; border-radius: 5px;">
-                            <a href="{{ route('s-m_proposal-index') }}"
+                            <a href="{{ route('s-m_ujian-index') }}"
                                 class="{{ ($currentRoute == 's-m_proposal-index') ? 'text-white' : '' }}">Monitoring
                                 Ujian</a>
                         </li>
