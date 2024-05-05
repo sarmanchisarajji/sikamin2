@@ -28,8 +28,19 @@ class StaffController extends Controller
     {
         $mahasiswa = Mahasiswa::with('ujian')->get();
 
+        $dosen = Dosen::get()->count();
+        $proposal = Ujian::where('jenis_ujian', 'proposal')->get()->count();
+        $hasil = Ujian::where('jenis_ujian', 'hasil')->get()->count();
+        $skripsi = Ujian::where('jenis_ujian', 'skripsi')->get()->count();
+
+        
         return view('staff.dashboard', [
             'mahasiswa' => $mahasiswa,
+            'dosen' => $dosen,
+            'proposal' => $proposal,
+            'hasil' => $hasil,
+            'skripsi' => $skripsi  
+
         ]);
     }
 

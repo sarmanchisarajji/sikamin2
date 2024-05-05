@@ -1,16 +1,15 @@
 @extends('layouts.main')
 @section('main-contents')
-    <div class="content container-fluid">
-        <div class="page-header">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="page-sub-header">
-                        <h3 class="page-title">Monitoring Ujian</h3>
-                        <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/mahasiswa/dashboard">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Monitoring Ujian</li>
-                        </ul>
-                    </div>
+<div class="content container-fluid">
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-sub-header">
+                    <h3 class="page-title">Monitoring Ujian</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/mahasiswa/dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Monitoring Ujian</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -275,4 +274,5 @@
             @endif
         @endforeach
     </div>
+</div>
 @endsection

@@ -84,7 +84,7 @@
                  }
    </script>
    @else
-   <div class="vh-100 d-flex align-items-center justify-content-center">
+   <div class="d-flex align-items-center justify-content-center" style="height: 70vh">
       <div class="loader">
          <div>
             <ul>
@@ -131,7 +131,7 @@
                   </svg>
                </li>
             </ul>
-         </div><span>Tidak Ada File</span>
+         </div><span style="font-size: 20px">Tidak Ada File</span>
       </div>
    </div>
    <style>
@@ -142,7 +142,7 @@
          --page: rgba(255, 255, 255, 0.36);
          --page-fold: rgba(255, 255, 255, 0.52);
          --duration: 3s;
-         width: 400px;
+         width: 330px;
          height: 340px;
          position: relative;
       }
@@ -226,7 +226,7 @@
       }
 
       .loader div ul li svg {
-         width: 190px;
+         width: 155px;
          height: 320px;
          display: block;
       }

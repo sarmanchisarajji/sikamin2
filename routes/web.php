@@ -75,6 +75,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('sk_pembimbing/{id}', [SuratController::class, 'sk_pembimbing'])->name('sk_pembimbing');
         Route::get('/staff/verifikasi_ujian/skripsi/sk_pembimbing/{id}', [SuratController::class, 'sk_pembimbing_view'])->name('s-sk_pembimbing');
         Route::put('/staff/verifikasi_ujian/skripsi/sk_pembimbing/update/{id}', [SuratController::class, 'sk_pembimbing_update'])->name('s-sk_pembimbing_update');
+        
+        Route::get('sk_penguji/{id}', [SuratController::class, 'sk_penguji'])->name('sk_penguji');
+        Route::get('/staff/verifikasi_ujian/skripsi/sk_penguji/{id}', [SuratController::class, 'sk_penguji_view'])->name('s-sk_penguji');
+        Route::put('/staff/verifikasi_ujian/skripsi/sk_penguji/update/{id}', [SuratController::class, 'sk_penguji_update'])->name('s-sk_penguji_update');
 
         Route::get('sk_penguji/{id}', [SuratController::class, 'sk_penguji'])->name('sk_penguji');
         Route::get('/staff/verifikasi_ujian/skripsi/sk_penguji/{id}', [SuratController::class, 'sk_penguji_view'])->name('s-sk_penguji');
