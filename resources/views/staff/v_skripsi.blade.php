@@ -68,7 +68,6 @@
                                  <a href="{{ route('s-v_ujian_form', $item->id) }}" class="btn text-white"
                                     style="background-color: blue">Terverifikasi</a>
                                  @endif
-
                               </div>
                               <div>
                                  <a href="{{ route('s-bukti_dukung', ['id'=> $item->id]) }}" class="btn text-white"
