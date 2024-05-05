@@ -2,12 +2,12 @@
 @section('main-contents')
 <div class="content container-fluid mb-4">
 
-   @include('staff.components.draft_layout', ['title' => 'Lembar Penilaian'])
+   @include('staff.components.draft_layout', ['title' => 'Berita Acara'])
 
    <div class="d-md-flex justify-content-evenly">
       <div class="col-md-4 col-12">
          <div class="bg-white px-4 py-4">
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="{{ route('s-berita_acara_update', $ujian->id) }}" method="post" enctype="multipart/form-data">
                @csrf
                @method('PUT')
                <div class="form-group local-forms">
@@ -54,7 +54,7 @@
          </div>
       </div>
       <div class="col-md-7 col-12 bg-white p-4">
-         <iframe id="file-iframe" src="{{ route('lembar_penilaian', $ujian->id) }}" align="top" height="800"
+         <iframe id="file-iframe" src="{{ route('berita_acara_skripsi', $ujian->id) }}" align="top" height="800"
             width="100%" frameborder="0" scrolling="auto"></iframe>
       </div>
    </div>

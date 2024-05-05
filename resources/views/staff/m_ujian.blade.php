@@ -8,7 +8,7 @@
                <h3 class="page-title">Monitoring Ujian</h3>
                <ul class="breadcrumb">
                   <li class="breadcrumb-item"><a href="">Monitoring Ujian</a></li>
-                  <li class="breadcrumb-item active">Proposal</li>
+                  <li class="breadcrumb-item active">Hasil</li>
                </ul>
             </div>
          </div>
@@ -16,15 +16,15 @@
    </div>
 
    <div class="settings-menu-links">
-      <ul class="nav nav-tabs menu-tabs d-flex">
-         <li class="nav-item">
+      <ul class="nav nav-tabs menu-tabs">
+         <li class="nav-item active">
             <a class="nav-link" href="{{ route('s-m_ujian-index') }}">Semua</a>
          </li>
-         <li class="nav-item active">
+         <li class="nav-item">
             <a class="nav-link" href="{{ route('s-m_proposal-index') }}">Proposal</a>
          </li>
          <li class="nav-item">
-            <a class="nav-link" href="{{ route('s-m_hasil-index') }}">Hasil</a>
+            <a class="nav-link " href="{{ route('s-m_hasil-index') }}">Hasil</a>
          </li>
          <li class="nav-item">
             <a class="nav-link" href="{{ route('s-m_skripsi-index') }}">Skripsi</a>
@@ -44,10 +44,11 @@
                            <th style="background-color: #3d5ee1" class="text-white col-3">Nama Lengkap</th>
                            <th style="background-color: #3d5ee1" class="text-white col-2">NIM</th>
                            <th style="background-color: #3d5ee1" class="text-white col-5">Judul</th>
+                           
                         </tr>
                      </thead>
                      <tbody>
-                        @foreach ($proposal as $key => $item)
+                        @foreach ($ujian as $key => $item)
                         <tr class="text-center">
                            <td>{{ $loop->iteration }}</td>
                            <td>{{ $item->mahasiswa->nama }}</td>

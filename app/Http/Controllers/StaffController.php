@@ -7,6 +7,7 @@ use App\Models\Filebukti;
 use App\Models\Mahasiswa;
 use App\Models\Ujian;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -15,9 +16,30 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class StaffController extends Controller
 {
+    public function profil()
+    {
+        $user = auth()->user();
+        return view('staff.profil', [
+            'user' => $user
+        ]);
+    }
+
     public function dashboard()
     {
-        return view('staff.dashboard');
+        $mahasiswa = Mahasiswa::with('ujian')->get();
+        $dosen = Dosen::get()->count();
+        $proposal = Ujian::where('jenis_ujian', 'proposal')->get()->count();
+        $hasil = Ujian::where('jenis_ujian', 'hasil')->get()->count();
+        $skripsi = Ujian::where('jenis_ujian', 'skripsi')->get()->count();
+
+        
+        return view('staff.dashboard', [
+            'mahasiswa' => $mahasiswa,
+            'dosen' => $dosen,
+            'proposal' => $proposal,
+            'hasil' => $hasil,
+            'skripsi' => $skripsi  
+        ]);
     }
 
     public function mahasiswa_index()
@@ -252,11 +274,71 @@ class StaffController extends Controller
 
     public function monitoring_dosen()
     {
-        $dosen = Dosen::all();
+        $dosens = Dosen::with('user')
+        ->select(
+            'dosens.*',
+            DB::raw('(SELECT COUNT(DISTINCT CASE 
+                WHEN uj1.id_pembimbing_1 = dosens.id THEN uj1.id_mahasiswa 
+                WHEN uj1.id_pembimbing_2 = dosens.id THEN uj1.id_mahasiswa 
+            END) 
+            FROM ujians uj1 
+            WHERE uj1.id_pembimbing_1 = dosens.id OR uj1.id_pembimbing_2 = dosens.id) as total_bimbingan'),
+            DB::raw('(SELECT COUNT(DISTINCT uj2.id_mahasiswa) 
+                FROM ujians uj2 
+                WHERE uj2.id_penguji_1 = dosens.id OR uj2.id_penguji_2 = dosens.id OR uj2.id_penguji_3 = dosens.id) as total_pengujian')
+        )
+            ->get();
+
+        foreach ($dosens as $dosen) {
+            $mahasiswasBimbingan = [];
+            $mahasiswasPenguji = [];
+
+            $ujiansBimbingan = Ujian::where('id_pembimbing_1', $dosen->id)
+                ->orWhere('id_pembimbing_2', $dosen->id)
+                ->with('mahasiswa') // Eager load data mahasiswa
+                ->get();
+
+            $ujiansPenguji = Ujian::where('id_penguji_1', $dosen->id)
+                ->orWhere('id_penguji_2', $dosen->id)
+                ->orWhere('id_penguji_3', $dosen->id)
+                ->with('mahasiswa') // Eager load data mahasiswa
+                ->get();
+
+            foreach ($ujiansBimbingan as $ujian) {
+                $mahasiswa = $ujian->mahasiswa; // Ambil objek mahasiswa
+                $judul = $ujian->judul; // Ambil judul ujian
+                $mahasiswasBimbingan[$mahasiswa->id] = [
+                    'nama' => $mahasiswa->nama,
+                    'judul' => $judul,
+                ]; // Simpan objek mahasiswa dan judul ujian
+            }
+
+            foreach ($ujiansPenguji as $ujian) {
+                $mahasiswa = $ujian->mahasiswa; // Ambil objek mahasiswa
+                $judul = $ujian->judul; // Ambil judul ujian
+                $mahasiswasPenguji[$mahasiswa->id] = [
+                    'nama' => $mahasiswa->nama,
+                    'judul' => $judul,
+                ]; // Simpan objek mahasiswa dan judul ujian
+            }
+
+            // Ubah array asosiatif menjadi array biasa
+            $dosen->mahasiswasBimbingan = array_values($mahasiswasBimbingan);
+            $dosen->mahasiswasPenguji = array_values($mahasiswasPenguji);
+        }
 
         return view('staff.m_dosen', [
+            'dosens' => $dosens,
+        ]);
+    }
 
-            'dosen' => $dosen
+
+
+    public function monitoring_ujian()
+    {
+        $ujian = Ujian::with('mahasiswa')->get();
+        return view('staff.m_ujian', [
+            'ujian' => $ujian
         ]);
     }
 
@@ -276,30 +358,77 @@ class StaffController extends Controller
         ]);
     }
 
-    public function verifikasi_ujian()
+    public function monitoring_skripsi()
+    {
+        $skripsi = Ujian::where('jenis_ujian', 'skripsi')->with('mahasiswa')->get();
+        return view('staff.m_skripsi', [
+            'skripsi' => $skripsi
+        ]);
+    }
+
+    public function verifikasi_proposal()
     {
         $proposal = Ujian::where('jenis_ujian', 'proposal')->with('mahasiswa')->get();
-        return view('staff.v_ujian', [
+        return view('staff.v_proposal', [
             'proposal' => $proposal
         ]);
     }
+
+    public function verifikasi_hasil()
+    {
+        $hasil = Ujian::where('jenis_ujian', 'hasil')->with('mahasiswa')->get();
+        return view('staff.v_hasil', [
+            'hasil' => $hasil
+        ]);
+    }
+
+    public function verifikasi_skripsi()
+    {
+        $skripsi = Ujian::where('jenis_ujian', 'skripsi')->with('mahasiswa')->get();
+        return view('staff.v_skripsi', [
+            'skripsi' => $skripsi
+        ]);
+    }
+
+    public function verifikasi_ujian_form($id)
+    {
+        $dosen = Dosen::all();
+        $ujian = Ujian::where('id', $id)->with('mahasiswa')->firstOrFail();
+        return view('staff.v_ujian_update', [
+            'dosen' => $dosen,
+            'ujian' => $ujian
+        ]);
+    }
+
+    public function verifikasi_ujian_update(Request $req, $id)
+    {
+        $ujian = Ujian::where('id', $id)->firstOrFail();
+        $ujian->update([
+            'status' => 'disetujui',
+            'id_penguji_1' =>  $req->id_penguji_1,
+            'id_penguji_2' => $req->id_penguji_2,
+            'id_penguji_3' => $req->id_penguji_3,
+            'tanggal_ujian' => $req->tanggal_ujian,
+            'jam_ujian' => $req->jam_ujian,
+            'tempat_ujian' => $req->tempat_ujian,
+            'ipk_sementara' => $req->ipk_sementara,
+            'id_pembimbing_1' => $req->id_pembimbing_1,
+            'id_pembimbing_2' => $req->id_pembimbing_2,
+        ]);
+
+        toast('Berhasil Memverifikasi Ujian', 'success');
+        return redirect()->back();
+    }
+
 
     public function bukti_dukung($id)
     {
         $file = Filebukti::where('id_ujian', $id)->get();
         $mahasiswa = Ujian::where('id', $id)->get();
+
         return view('staff.bukti_dukung', [
             'file' => $file,
             'mahasiswa' => $mahasiswa
         ]);
-    }
-
-    public function update_status_ujian(Request $req, $id)
-    {
-        $ujian = Ujian::findOrFail($id);
-        $ujian->update([
-            'status' => $req->status
-        ]);
-        return redirect(route('s-v_proposal-index'));
     }
 }
