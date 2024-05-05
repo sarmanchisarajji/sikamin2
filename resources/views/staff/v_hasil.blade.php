@@ -53,11 +53,21 @@
                            <td>{{ $item->mahasiswa->nama }}</td>
                            <td>{{ $item->mahasiswa->nim }}</td>
                            <td>{{ $item->judul }}</td>
-                           <td>{{ $item->status }}</td>
+                           <td>
+                              <p
+                                 class="px-3 rounded-pill text-white {{ $item->status == 'diajukan' ? 'bg-warning' : 'bg-info' }}">
+                                 {{ $item->status
+                                 }}</p>
+                           </td>
                            <td class="d-flex flex-column">
                               <div>
+                                 @if ($item->status == 'diajukan')
                                  <a href="{{ route('s-v_ujian_form', $item->id) }}" class="btn text-white"
                                     style="background-color: orangered">Verifikasi</a>
+                                 @else
+                                 <a href="{{ route('s-v_ujian_form', $item->id) }}" class="btn text-white"
+                                    style="background-color: blue">Terverifikasi</a>
+                                 @endif
                               </div>
                               <div>
                                  <a href="{{ route('s-bukti_dukung', ['id'=> $item->id]) }}" class="btn text-white"
@@ -70,10 +80,12 @@
                                  <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                     aria-expanded="false"><i class="fas fa-ellipsis-h"></i></a>
                                  <div class="dropdown-menu dropdown-menu-end fs-6">
-                                    <a class="dropdown-item py-2" href="{{ route('s-berita_acara_hasil', $item->id) }}">
+                                    <a class="dropdown-item py-2 {{ $item->status == 'diajukan' ? 'disabled' : '' }}"
+                                       href="{{ route('s-berita_acara_hasil', $item->id) }}">
                                        Berita Acara
                                     </a>
-                                    <a class="dropdown-item py-2" href="{{ route('s-undangan_hasil', $item->id) }}">
+                                    <a class="dropdown-item py-2 {{ $item->status == 'diajukan' ? 'disabled' : '' }}"
+                                       href="{{ route('s-undangan_hasil', $item->id) }}">
                                        Undangan Hasil
                                     </a>
                                  </div>

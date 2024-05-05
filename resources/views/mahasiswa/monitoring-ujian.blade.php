@@ -27,7 +27,7 @@
                 @endif">
                 <div class="card-body">
                     <h3>{{ $ujian->judul }}</h3>
-                    <p> Jenis Ujian :
+                    <p> Jenis Ujian 
                         @if ($ujian->jenis_ujian == 'proposal')
                     <div class="badge badge-soft-primary">Proposal</div>
                     @elseif ($ujian->jenis_ujian == 'hasil')

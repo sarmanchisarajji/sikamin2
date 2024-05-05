@@ -3,43 +3,49 @@
 <div class="py-3 px-3 container-fluid">
    <div class="row mb-4">
       <div class="col-md-4 col-12">
-         <div class="bg-comman w-100 mb-3">
+         <div class="bg-comman w-100 mb-3" style="background-color: salmon">
             <div class="card-body">
                <div class="db-widgets d-flex justify-content-between align-items-center">
-                  <div class="db-info">
-                     <h6>Total Mahasiswa</h6>
-                     <h3>04/06</h3>
-                  </div>
-                  <div class="db-icon">
-                     <img src="" alt="Dashboard Icon">
+                  <div class="">
+                     <h4 class="text-white">Total Mahasiswa</h4>
+                     <h3 class="text-white">{{ $mahasiswa->count() }}</h3>
                   </div>
                </div>
             </div>
          </div>
-         <div class="bg-comman w-100 mb-3 mb-md-0">
+         <div class="bg-comman w-100 mb-3 mb-md-0" style="background-color: lightgreen">
             <div class="card-body">
                <div class="db-widgets d-flex justify-content-between align-items-center">
-                  <div class="db-info">
-                     <h6>Total Dosen</h6>
-                     <h3>04/06</h3>
-                  </div>
-                  <div class="db-icon">
-                     <img src="{{ URL::to('assets/img/icons/teacher-icon-01.svg') }}" alt="Dashboard Icon">
+                  <div class="">
+                     <h4 class="text-white">Total Dosen</h4>
+                     <h3 class="text-white">{{ $dosen }}</h3>
                   </div>
                </div>
             </div>
          </div>
       </div>
       <div class="col-md-8 col-12">
-         <div class="bg-comman w-100 h-100">
+         <div class="bg-comman w-100 h-100" style="background-color: lightskyblue;">
             <div class="card-body">
-               <div class="db-widgets d-flex justify-content-between align-items-center">
-                  <div class="db-info">
-                     <h6>Total Pengajuan ujian</h6>
-                     <h3>04/06</h3>
+               <div class="db-widgets">
+                  <div>
+                     <h4 class="text-white">Total Pengajuan ujian</h4>
                   </div>
-                  <div class="db-icon">
-                     <img src="{{ URL::to('assets/img/icons/teacher-icon-01.svg') }}" alt="Dashboard Icon">
+                  <div class="d-flex justify-content-center mt-5">
+                     <div class="d-flex w-100 justify-content-between px-5">
+                        <div>
+                           <h5 class="text-white">Proposal</h5>
+                           <h3 class="text-white">{{ $proposal }}</h3>
+                        </div>
+                        <div>
+                           <h5 class="text-white">Hasil</h5>
+                           <h3 class="text-white">{{ $hasil }}</h3>
+                        </div>
+                        <div>
+                           <h5 class="text-white">Skripsi</h5>
+                           <h3 class="text-white">{{ $skripsi }}</h3>
+                        </div>
+                     </div>
                   </div>
                </div>
             </div>
@@ -93,7 +99,7 @@
                         {{ $item->ujian[2]->judul }}
                         @endif
                      </li>
-                     <li class="col-1">Aktif</li>
+                     <li class="col-1 rounded-pill text-white {{ $item->status == 'aktif' ? 'bg-warning' : 'bg-info' }}">Aktif</li>
                      <li class="col-1">2020</li>
                      <li class="col-1">
                         <i class="fas fa-chevron-down collapsed p-2 rounded-pill"

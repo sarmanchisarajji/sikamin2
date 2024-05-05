@@ -53,11 +53,16 @@
                            <td>{{ $item->mahasiswa->nama }}</td>
                            <td>{{ $item->mahasiswa->nim }}</td>
                            <td>{{ $item->judul }}</td>
-                           <td>{{ $item->status }}</td>
+                           <td><p class="px-3 rounded-pill text-white {{ $item->status == 'diajukan' ? 'bg-warning' : 'bg-info' }}">{{ $item->status }}</p></td>
                            <td class="d-flex flex-column">
                               <div>
+                                 @if ($item->status == 'diajukan')
                                  <a href="{{ route('s-v_ujian_form', $item->id) }}" class="btn text-white"
                                     style="background-color: orangered">Verifikasi</a>
+                                 @else
+                                 <a href="{{ route('s-v_ujian_form', $item->id) }}" class="btn text-white"
+                                    style="background-color: blue">Terverifikasi</a>
+                                 @endif
                               </div>
                               <div>
                                  <a href="{{ route('s-bukti_dukung', ['id'=> $item->id]) }}" class="btn text-white"
