@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Dosen;
 use App\Models\Ujian;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -122,12 +123,77 @@ class UjianController extends Controller
     {
         $mahasiswa = Mahasiswa::where('id_user', Auth::user()->id)->first();
         $ujians = $mahasiswa->ujian()
-            ->whereIn('status', ['disetujui', 'selesai'])
-            ->orderBy('tanggal_ujian', 'desc')
+            ->orderBy('tanggal_ujian', 'asc')
             ->get();
         return view('mahasiswa.monitoring-ujian', [
             'mahasiswa' => $mahasiswa,
-            'ujians' => $ujians
+            'ujians' => $ujians,
         ]);
+    }
+
+    public function surat_berita_acara($id)
+    {
+        $ujian = Ujian::with('mahasiswa')->find($id);
+        $ttd = Dosen::where('jabatan_akademik', 'kajur')
+            ->orWhere('jabatan_akademik', 'sekjur')
+            ->get();
+        $pdf = PDF::loadView('/staff/surat/berita_acara', [
+            'ujian' => $ujian,
+            'ttd' => $ttd
+        ]);
+        $pdf->setPaper('legal', 'portrait');
+
+        return $pdf->stream();
+    }
+
+    public function surat_undangan($id)
+    {
+        $ujian = Ujian::with('mahasiswa')->find($id);
+        $ttd = Dosen::where('jabatan_akademik', 'sekjur')
+            ->get();
+        $pdf = PDF::loadView('/staff/surat/undangan_proposal', [
+            'ujian' => $ujian,
+            'ttd' => $ttd
+        ]);
+        $pdf->setPaper('legal', 'portrait');
+
+        return $pdf->stream();
+    }
+
+    public function sk_pembimbing($id)
+    {
+        $ujian = Ujian::with('mahasiswa')->find($id);
+        $pdf = PDF::loadView('/staff/surat/sk_pembimbing', [
+            'ujian' => $ujian
+        ]);
+        $pdf->setPaper('legal', 'portrait');
+
+        return $pdf->stream();
+    }
+
+    public function sk_penguji($id)
+    {
+        $ujian = Ujian::with('mahasiswa')->find($id);
+        $ttd = Dosen::where('jabatan_akademik', 'sekjur')
+            ->get();
+        $pdf = PDF::loadView('/staff/surat/sk_penguji', [
+            'ujian' => $ujian,
+            'ttd' => $ttd
+        ]);
+        $pdf->setPaper('legal', 'portrait');
+        return $pdf->stream();
+    }
+
+    public function lembar_penilaian($id)
+    {
+        $ujian = Ujian::with('mahasiswa')->find($id);
+        $ttd = Dosen::where('jabatan_akademik', 'sekjur')
+            ->get();
+        $pdf = PDF::loadView('/staff/surat/lembar_penilaian', [
+            'ujian' => $ujian,
+            'ttd' => $ttd
+        ]);
+        $pdf->setPaper('legal', 'portrait');
+        return $pdf->stream();
     }
 }

@@ -363,6 +363,7 @@ class StaffController extends Controller
         return view('staff.v_proposal', [
             'proposal' => $proposal
         ]);
+        
     }
 
     public function verifikasi_hasil()
