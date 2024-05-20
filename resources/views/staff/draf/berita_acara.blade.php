@@ -14,8 +14,8 @@
                   <label>PLH/PLT (optional) <span class="login-danger">*</span></label>
                   <select class="form-control select" name="plhplt">
                      <option selected disabled></option>
-                     <option value="PLH">PLH</option>
-                     <option value="PLT">PLT</option>
+                     <option value="PLH" {{ $ujian->plhplt == 'PLH' ? 'selected' : '' }}>PLH</option>
+                     <option value="PLT" {{ $ujian->plhplt == 'PLT' ? 'selected' : '' }}>PLT</option>
                   </select>
                </div>
                <div class="form-group local-forms">
@@ -23,11 +23,12 @@
                   <select class="form-control select" name="nama_ttd">
                      <option selected disabled></option>
                      @foreach ($ttd as $item)
-                     <option value="{{ $item->nama_dosen }}">{{ $item->nama_dosen }}</option>
+                     <option value="{{ $item->nama_dosen }}" {{ $ujian->nama_ttd == $item->nama_dosen ? 'selected' : ''
+                        }}>{{ $item->nama_dosen }}</option>
                      @endforeach
                   </select>
                </div>
-               {{-- <label for="">Upload Ulang File Berisi TTD (Scan PDF)</label>
+               <label for="file">Upload Ulang File Berisi TTD (Scan PDF)</label>
                <div>
                   <label class="custum-file-upload" for="file">
                      <div class="icon">
@@ -41,12 +42,12 @@
                            </g>
                         </svg>
                      </div>
-                     <div class="text">
-                        <span>Click to upload image</span>
+                     <div class="text" id="filename">
+                        <span>{{ !empty($ujian->ba) ? $ujian->ba : 'Tekan untuk upload file' }}</span>
                      </div>
-                     <input type="file" id="file" name="ba">
+                     <input type="file" id="file" name="ba" onchange="displayFileName()">
                   </label>
-               </div> --}}
+               </div>
                <div class="mt-4">
                   <button class="btn btn-primary col-12" type="submit">Kirim</button>
                </div>
@@ -54,8 +55,13 @@
          </div>
       </div>
       <div class="col-md-7 col-12 bg-white p-4">
-         <iframe id="file-iframe" src="{{ route('surat_berita_acara', $ujian->id) }}" align="top" height="800"
-            width="100%" frameborder="0" scrolling="auto"></iframe>
+         @if (!empty($ujian->ba))
+         <embed id="file-iframe" src="{{ asset('storage/' . $ujian->jenis_ujian . '/'. $ujian->mahasiswa->nama . '/' . $ujian->ba) }}"
+            align="top" height="800" width="100%" frameborder="0" scrolling="auto"></embed>
+         @else
+         <embed id="file-iframe" src="{{ route('surat_berita_acara', $ujian->id) }}" align="top" height="800"
+            width="100%" frameborder="0" scrolling="auto"></embed>
+         @endif
       </div>
    </div>
 </div>
@@ -103,4 +109,12 @@
       display: none;
    }
 </style>
+<script>
+   function displayFileName() {
+      const input = document.getElementById('file');
+      const filenameContainer = document.getElementById('filename');
+      const filename = input.files[0].name;
+      filenameContainer.innerHTML = `<span>${filename}</span>`;
+   }
+</script>
 @endsection

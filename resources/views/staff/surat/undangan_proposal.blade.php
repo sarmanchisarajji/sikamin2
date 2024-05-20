@@ -67,10 +67,10 @@
          <tr>
             <td class="title">Nomor</td>
             <td style="vertical-align: top; padding-right: 3px;">:</td>
-            @if ($ujian->no_sp == null)
+            @if ($ujian->no_surat_undangan == null)
             <td class="col-6"><span style="padding-right: 30px"> </span>/UN29.10/PP/{{ date('Y') }}</td>
             @else
-            <td class="col-6"><span style=""> </span>{{$ujian->no_sp}}</td>
+            <td class="col-6"><span style=""> </span>{{$ujian->no_surat_undangan}}</td>
             @endif
             <td class="col-6">Kendari, {{ \Carbon\Carbon::parse($ujian->updated_at)->locale('id_ID')->isoFormat('DD MMMM YYYY') }}</td>
          </tr>

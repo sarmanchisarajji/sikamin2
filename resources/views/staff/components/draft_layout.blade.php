@@ -48,7 +48,7 @@
          <a class="nav-link" href="{{ route('s-berita_acara_hasil', $ujian->id) }}">Berita Acara</a>
       </li>
       <li class="nav-item {{ request()->routeIs('s-undangan_hasil') ? 'active' : '' }}">
-         <a class="nav-link" href="{{ route('s-undangan_hasil', $ujian->id) }}">Undangan Proposal</a>
+         <a class="nav-link" href="{{ route('s-undangan_hasil', $ujian->id) }}">Undangan Hasil</a>
       </li>
       @endif
    </ul>

@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{ asset('') }}assets/plugins/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('') }}assets/css/style.css">
     <link rel="stylesheet" href="{{ asset('') }}assets/plugins/datatables/datatables.min.css">
+    <link rel="stylesheet" href="{{ asset('') }}assets/plugins/simple-calendar/simple-calendar.css">
 </head>
 
 <body>
@@ -51,6 +52,8 @@
     <script src="{{ asset('') }}assets/js/script.js"></script>
     <script src="{{ asset('') }}assets/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="{{ asset('') }}assets/plugins/datatables/datatables.min.js"></script>
+    <script src="{{ asset('')}}assets/plugins/simple-calendar/jquery.simple-calendar.js"></script>
+    <script src="{{ asset('') }}assets/js/calander.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script>

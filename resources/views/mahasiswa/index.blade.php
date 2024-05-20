@@ -30,7 +30,7 @@
                                 </h5>
                             </div>
                             <div class="db-icon">
-                                <img src="{{ asset('') }}assets/img/icons/dash-icon-01.svg" alt="Dashboard Icon">
+                                <img src="{{ asset('') }}assets/img/dash-icon-01.svg" alt="Dashboard Icon">
                             </div>
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                                 </h5>
                             </div>
                             <div class="db-icon">
-                                <img src="{{ asset('') }}assets/img/icons/dash-icon-02.svg" alt="Dashboard Icon">
+                                <img src="{{ asset('') }}assets/img/dash-icon-02.svg" alt="Dashboard Icon">
                             </div>
                         </div>
                     </div>

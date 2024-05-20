@@ -17,7 +17,7 @@ return new class extends Migration
             $table->enum('jenis_ujian', ['proposal', 'hasil', 'skripsi']);
             $table->string('judul');
             $table->string('ipk_sementara');
-            $table->enum('status', ['diajukan', 'disetujui', 'selesai'])->default('diajukan');
+            $table->enum('status', ['diajukan', 'disetujui'])->default('diajukan');
             $table->string('nilai_ujian')->nullable();
             $table->string('ketua_sidang')->nullable();
             $table->string('sekretaris_sidang')->nullable();
@@ -29,19 +29,17 @@ return new class extends Migration
             $table->unsignedBigInteger('id_penguji_1')->nullable();
             $table->unsignedBigInteger('id_penguji_2')->nullable();
             $table->unsignedBigInteger('id_penguji_3')->nullable();
-            $table->string('hari_ujian')->nullable();
             $table->date('tanggal_ujian')->nullable();
             $table->string('jam_ujian')->nullable();
             $table->string('tempat_ujian')->nullable();
             $table->string('ba')->nullable(); // berita acara
-            $table->string('st')->nullable(); // surat tugas ujian
-            $table->string('sp')->nullable(); // surat penunjukan pembimbing
-            $table->string('sk')->nullable(); // surat keterangan ujian
-            $table->string('lp')->nullable(); // lembar penilaian
+            $table->string('undangan')->nullable(); // surat tugas ujian
+            $table->string('sk_pembimbing')->nullable(); // surat tugas ujian
+            $table->string('sk_penguji')->nullable(); // surat tugas ujian
+            $table->string('lembar_penilaian')->nullable(); // surat tugas ujian
             $table->string('no_sk_pembimbing')->nullable();
             $table->string('no_sk_penguji')->nullable();
-            $table->string('no_sp')->nullable();
-            $table->string('no_st')->nullable();
+            $table->string('no_surat_undangan')->nullable();
             $table->string('nama_ttd')->nullable();
             $table->enum('plhplt', ['PLH', 'PLT', ''])->nullable();
             $table->timestamps();
