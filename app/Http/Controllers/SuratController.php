@@ -38,13 +38,21 @@ class SuratController extends Controller
     {
         $validatedData = $req->validate([
             'no_surat' => 'nullable|string',
+            'sk_pembimbing' => 'nullable|file|mimes:pdf|max:2048',
+
         ]);
 
-        $ujian = Ujian::where('id', $id)->firstOrFail();
+        $ujian = Ujian::where('id', $id)->with('mahasiswa')->firstOrFail();
+        if ($req->hasFile('sk_pembimbing')) {
+            $file = $req->file('sk_pembimbing');
+            $fileName = 'SK Pembimbing ' . $ujian->mahasiswa->nama . '.' . $file->getClientOriginalExtension();
+            $file->storeAs($ujian->jenis_ujian . '/' . $ujian->mahasiswa->nama . '/', $fileName);
+            $ujian->sk_pembimbing = $fileName;
+        }
         $ujian->no_sk_pembimbing = $req->input('no_surat');
         $ujian->save();
 
-        toast('Berhasil Melengkapi SK Pembimbing', 'success');
+        toast('Berhasil Melengkapi Undangan Proposal', 'success');
         return redirect()->back();
     }
     // SK PEMBIMBING
@@ -79,13 +87,21 @@ class SuratController extends Controller
     {
         $validatedData = $req->validate([
             'no_surat' => 'nullable|string',
+            'sk_penguji' => 'nullable|file|mimes:pdf|max:2048',
+
         ]);
 
-        $ujian = Ujian::where('id', $id)->firstOrFail();
+        $ujian = Ujian::where('id', $id)->with('mahasiswa')->firstOrFail();
+        if ($req->hasFile('sk_penguji')) {
+            $file = $req->file('sk_penguji');
+            $fileName = 'SK Penguji ' . $ujian->mahasiswa->nama . '.' . $file->getClientOriginalExtension();
+            $file->storeAs($ujian->jenis_ujian . '/' . $ujian->mahasiswa->nama . '/', $fileName);
+            $ujian->sk_penguji = $fileName;
+        }
         $ujian->no_sk_penguji = $req->input('no_surat');
         $ujian->save();
 
-        toast('Berhasil Melengkapi SK Penguji', 'success');
+        toast('Berhasil Melengkapi Undangan Proposal', 'success');
         return redirect()->back();
     }    
     // SK PENGUJI
@@ -127,9 +143,8 @@ class SuratController extends Controller
         $ujian = Ujian::where('id', $id)->with('mahasiswa')->firstOrFail();
         if ($req->hasFile('ba')) {
             $file = $req->file('ba');
-            $fileName = $ujian->mahasiswa->nama . '.' . $file->getClientOriginalExtension();
-
-            $file->storeAs('berita-acara/proposal', $fileName);
+            $fileName = 'Berita Acara ' . $ujian->mahasiswa->nama . '.'. $file->getClientOriginalExtension();
+            $file->storeAs($ujian->jenis_ujian. '/'. $ujian->mahasiswa->nama . '/' , $fileName);
             $ujian->ba = $fileName;
         }
         $ujian->plhplt = $req->input('plhplt');
@@ -170,24 +185,23 @@ class SuratController extends Controller
     {
         $validatedData = $req->validate([
             'no_surat' => 'nullable|string',
+            'undangan' => 'nullable|file|mimes:pdf|max:2048',
+
         ]);
 
         $ujian = Ujian::where('id', $id)->with('mahasiswa')->firstOrFail();
-        if ($req->hasFile('ba')) {
-            $file = $req->file('ba');
-            $fileName = $ujian->mahasiswa->nama . '.' . $file->getClientOriginalExtension();
-
-            $file->storeAs('undangan/proposal', $fileName);
-            $ujian->ba = $fileName;
+        if ($req->hasFile('undangan')) {
+            $file = $req->file('undangan');
+            $fileName = 'Undangan ' . $ujian->mahasiswa->nama . '.' . $file->getClientOriginalExtension();
+            $file->storeAs($ujian->jenis_ujian . '/' . $ujian->mahasiswa->nama . '/', $fileName);
+            $ujian->undangan = $fileName;
         }
-        $ujian->no_sp = $req->input('no_surat');
+        $ujian->no_surat_undangan = $req->input('no_surat');
         $ujian->save();
 
         toast('Berhasil Melengkapi Undangan Proposal', 'success');
         return redirect()->back();
     }
-
-
     
     public function lembar_penilaian($id)
     {
@@ -214,6 +228,26 @@ class SuratController extends Controller
         ]);
     }
 
+    public function lembar_penilaian_update(Request $req, $id)
+    {
+        $validatedData = $req->validate([
+            'lembar_penilaian' => 'nullable|file|mimes:pdf|max:2048',
+
+        ]);
+
+        $ujian = Ujian::where('id', $id)->with('mahasiswa')->firstOrFail();
+        if ($req->hasFile('lembar_penilaian')) {
+            $file = $req->file('lembar_penilaian');
+            $fileName = 'Lembar Penilaian ' . $ujian->mahasiswa->nama . '.' . $file->getClientOriginalExtension();
+            $file->storeAs($ujian->jenis_ujian . '/' . $ujian->mahasiswa->nama . '/', $fileName);
+            $ujian->lembar_penilaian = $fileName;
+        }
+        $ujian->save();
+
+        toast('Berhasil Melengkapi Undangan Proposal', 'success');
+        return redirect()->back();
+    }
+
     public function berita_acara_skripsi($id)
     {
         $ujian = Ujian::with('mahasiswa')->find($id);
@@ -230,9 +264,35 @@ class SuratController extends Controller
         $ttd = Dosen::where('jabatan_akademik', 'kajur')
             ->orWhere('jabatan_akademik', 'sekjur')
             ->get();
+        $dosen = Dosen::all();
         return view('staff.draf.berita_acara_skripsi', [
             'ujian' => $ujian,
-            'ttd' => $ttd
+            'ttd' => $ttd,
+            'dosen' => $dosen
         ]);
+    }
+
+    public function berita_acara_skripsi_update(Request $req, $id)
+    {
+        $validatedData = $req->validate([
+            'plhplt' => 'nullable|string',
+            'nama_ttd' => 'nullable|string',
+            'ba' => 'nullable|file|mimes:pdf|max:2048',
+
+        ]);
+
+        $ujian = Ujian::where('id', $id)->with('mahasiswa')->firstOrFail();
+        if ($req->hasFile('ba')) {
+            $file = $req->file('ba');
+            $fileName = 'Berita Acara ' . $ujian->mahasiswa->nama . '.' . $file->getClientOriginalExtension();
+            $file->storeAs($ujian->jenis_ujian . '/' . $ujian->mahasiswa->nama . '/', $fileName);
+            $ujian->ba = $fileName;
+        }
+        $ujian->plhplt = $req->input('plhplt');
+        $ujian->nama_ttd = $req->input('nama_ttd');
+        $ujian->save();
+
+        toast('Berhasil Melengkapi Undangan Proposal', 'success');
+        return redirect()->back();
     }
 }

@@ -209,6 +209,7 @@ class StaffController extends Controller
             ]);
         });
 
+        toast('Berhasil Menambahkan Dosen', 'success');
         return redirect()->route('s-dosen-index')->with('success', 'Berhasil Menambahkan Data Dosen');
     }
 
@@ -254,7 +255,7 @@ class StaffController extends Controller
             $user->update([
                 'username' => $validatedData['username'],
                 'nama_pengguna' => $validatedData['nama'],
-                'user_type' => 'mahasiswa',
+                'user_type' => 'dosen',
                 'is_aktif' => $validatedData['status'] === 'aktif' ? 'y' : 'n',
                 'password' => !empty($validatedData['password']) ? Hash::make($validatedData['password']) : $user->password,
             ]);
@@ -321,10 +322,9 @@ class StaffController extends Controller
                 $mahasiswasPenguji[$mahasiswa->id] = [
                     'nama' => $mahasiswa->nama,
                     'judul' => $judul,
-                ]; // Simpan objek mahasiswa dan judul ujian
+                ]; 
             }
 
-            // Ubah array asosiatif menjadi array biasa
             $dosen->mahasiswasBimbingan = array_values($mahasiswasBimbingan);
             $dosen->mahasiswasPenguji = array_values($mahasiswasPenguji);
         }

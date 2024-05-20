@@ -53,7 +53,7 @@
                            <td>{{ $item->mahasiswa->nama }}</td>
                            <td>{{ $item->mahasiswa->nim }}</td>
                            <td>{{ $item->judul }}</td>
-                           <td><p class="px-3 rounded-pill text-white {{ $item->status == 'diajukan' ? 'bg-warning' : 'bg-info' }}">{{ $item->status }}</p></td>
+                           <td><span class="px-3 rounded-pill text-white {{ $item->status == 'diajukan' ? 'bg-warning' : 'bg-info' }}">{{ $item->status }}</span></td>
                            <td class="d-flex flex-column">
                               <div>
                                  @if ($item->status == 'diajukan')

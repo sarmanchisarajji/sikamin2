@@ -1,7 +1,7 @@
 <div class="header">
     <div class="header-left">
         <a href="index.html" class="logo">
-            <img src="{{ asset('') }}assets/img/logo.svg" alt="Logo">
+            <img src="{{ asset('') }}assets/img/logo.svg" alt="Logo" width="100" height="100">
         </a>
         <a href="index.html" class="logo logo-small">
             <img src="{{ asset('') }}assets/img/logo-small.svg" alt="Logo" width="30" height="30">
@@ -22,7 +22,7 @@
             <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                 <span class="user-img">
                     @if (Auth::user()->foto == null)
-                    <img class="rounded-circle" src="{{ asset('assets/img/profile-default.jpeg')  }}" width="31"
+                    <img class="rounded-circle" src="{{ asset('assets\img\profile.png')  }}" width="31"
                         alt="{{ Auth::user()->nama_pengguna }}">
                     @else
                     <img class="rounded-circle" src="{{ asset('storage/' . Auth::user()->foto) }}" width="31"
