@@ -27,6 +27,7 @@ class StaffController extends Controller
     public function dashboard()
     {
         $mahasiswa = Mahasiswa::with('ujian')->get();
+
         $dosen = Dosen::get()->count();
         $proposal = Ujian::where('jenis_ujian', 'proposal')->get()->count();
         $hasil = Ujian::where('jenis_ujian', 'hasil')->get()->count();
@@ -39,6 +40,7 @@ class StaffController extends Controller
             'proposal' => $proposal,
             'hasil' => $hasil,
             'skripsi' => $skripsi  
+
         ]);
     }
 
@@ -372,6 +374,7 @@ class StaffController extends Controller
         return view('staff.v_proposal', [
             'proposal' => $proposal
         ]);
+        
     }
 
     public function verifikasi_hasil()
