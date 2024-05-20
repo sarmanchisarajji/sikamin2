@@ -27,9 +27,9 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'username' => 'E1E120024',
+            'username' => 'staff12345',
             'email' => 'afdahlul@gmail.com',
-            'password' => Hash::make('E1E120024'),
+            'password' => Hash::make('staff12345'),
             'nama_pengguna' => 'Afdhalul Rahmat',
             'no_hp' => '12345678',
             'user_type' => 'staff',
@@ -37,20 +37,20 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'username' => 'E1E120001',
-            'email' => 'cia@gmail.com',
-            'password' => Hash::make('E1E120001'),
-            'nama_pengguna' => 'Nurfauziah Makmur',
+            'username' => 'isnawaty',
+            'email' => 'isnawaty@gmail.com',
+            'password' => Hash::make('isnawaty'),
+            'nama_pengguna' => 'Isnawaty',
             'no_hp' => '12345678',
             'user_type' => 'dosen',
             'is_aktif' => 'y',
         ]);
 
         User::create([
-            'username' => 'E1E120031',
-            'email' => 'acad@gmail.com',
-            'password' => Hash::make('E1E120031'),
-            'nama_pengguna' => 'Akbar Asad',
+            'username' => 'fidakasara',
+            'email' => 'fidakasara@gmail.com',
+            'password' => Hash::make('fidakasara'),
+            'nama_pengguna' => 'LM Fid Aksara',
             'no_hp' => '12345678',
             'user_type' => 'dosen',
             'is_aktif' => 'y',
@@ -64,7 +64,7 @@ class UserSeeder extends Seeder
         ]);
 
         Dosen::create([
-            'nama_dosen' => 'Nurfauziah Makmur',
+            'nama_dosen' => 'Isnawaty',
             'nip' => 12344,
             'nidn' => 12332323,
             'jabatan_akademik' => 'dosen',
@@ -77,7 +77,7 @@ class UserSeeder extends Seeder
         ]);
 
         Dosen::create([
-            'nama_dosen' => 'Akbar Asad',
+            'nama_dosen' => 'LM Fid Aksara',
             'nip' => 12345,
             'nidn' => 123323233,
             'jabatan_akademik' => 'dosen',
