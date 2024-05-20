@@ -33,8 +33,13 @@
       @foreach ($dosens as $item)
       <div class="card px-2 py-2 d-flex flex-row align-items-center gap-3 bg-white col-md-5 col-12">
          <div style="width: 130px; height: 150px;">
-            <img src="{{ asset('/assets/img/'. $item->user->foto) }}" alt=""
+            @if ($item->user->foto == null)
+            <img src="{{ asset('assets\img\profile.png') }}" alt=""
+               style="border-radius: 6px; width: inherit; height: inherit; object-fit: fill;">                
+            @else
+            <img src="{{ asset('storage/'. $item->user->foto) }}" alt=""
                style="border-radius: 6px; width: inherit; height: inherit; object-fit: fill;">
+            @endif
          </div>
          <div class="w-100">
             <p class="fs-5 fw-bold">{{ $item->nama_dosen }}</p>

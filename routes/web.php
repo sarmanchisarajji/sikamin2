@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DosenController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\UjianController;
 use App\Http\Controllers\FilebuktiController;
@@ -62,16 +63,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/staff/verifikasi_ujian/hasil', [StaffController::class, 'verifikasi_hasil'])->name('s-v_hasil-index');
         Route::get('/staff/verifikasi_ujian/skripsi', [StaffController::class, 'verifikasi_skripsi'])->name('s-v_skripsi-index');
         Route::get('/staff/verifikasi_ujian/proposal/bukti_dukung/{id}', [StaffController::class, 'bukti_dukung'])->name('s-bukti_dukung');
-        Route::get('/staff/verifikasi_ujian/proposal/{id}', [StaffController::class, 'verifikasi_ujian_form'])->name('s-v_ujian_form');
-        Route::put('/staff/verifikasi_ujian/proposal/update/{id}', [StaffController::class, 'verifikasi_ujian_update'])->name('s-v_ujian-update');
+        Route::get('/staff/verifikasi_ujian/{id}', [StaffController::class, 'verifikasi_ujian_form'])->name('s-v_ujian_form');
+        Route::put('/staff/verifikasi_ujian/update/{id}', [StaffController::class, 'verifikasi_ujian_update'])->name('s-v_ujian-update');
 
-        
         Route::get('surat_berita_acara/{id}', [SuratController::class, 'surat_berita_acara'])->name('surat_berita_acara');
         Route::get('/staff/verifikasi_ujian/proposal/berita_acara/{id}', [SuratController::class, 'berita_acara_view'])->name('s-berita_acara_proposal');
         Route::get('/staff/verifikasi_ujian/hasil/berita_acara/{id}', [SuratController::class, 'berita_acara_view'])->name('s-berita_acara_hasil');
         Route::get('/staff/verifikasi_ujian/skripsi/berita_acara/{id}', [SuratController::class, 'berita_acara_view'])->name('s-berita_acara_skripsi');
         Route::put('/staff/verifikasi_ujian/proposal/berita_acara/update/{id}', [SuratController::class, 'berita_acara_update'])->name('s-berita_acara_update');
-
+        
         Route::get('sk_pembimbing/{id}', [SuratController::class, 'sk_pembimbing'])->name('sk_pembimbing');
         Route::get('/staff/verifikasi_ujian/skripsi/sk_pembimbing/{id}', [SuratController::class, 'sk_pembimbing_view'])->name('s-sk_pembimbing');
         Route::put('/staff/verifikasi_ujian/skripsi/sk_pembimbing/update/{id}', [SuratController::class, 'sk_pembimbing_update'])->name('s-sk_pembimbing_update');
@@ -83,14 +83,18 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/staff/verifikasi_ujian/proposal/undangan/{id}', [SuratController::class, 'undangan_view'])->name('s-undangan_proposal');
         Route::get('/staff/verifikasi_ujian/hasil/undangan/{id}', [SuratController::class, 'undangan_view'])->name('s-undangan_hasil');
         Route::get('/staff/verifikasi_ujian/skripsi/undangan/{id}', [SuratController::class, 'undangan_view'])->name('s-undangan_skripsi');
-
+        
+        Route::put('/staff/verifikasi_ujian/proposal/undangan_proposal/update/{id}', [SuratController::class, 'undangan_update'])->name('s-undangan_update');
         Route::put('/staff/verifikasi_ujian/proposal/undangan_proposal/update/{id}', [SuratController::class, 'undangan_update'])->name('s-undangan_update');
         Route::get('/staff/verifikasi_ujian/skripsi/berita_acara/{id}', [SuratController::class, 'berita_acara_skripsi_view'])->name('s-berita_acara_skripsi');
         Route::get('/staff/verifikasi_ujian/skripsi/lembar_penilaian/{id}', [SuratController::class, 'lembar_penilaian_view'])->name('s-lembar_penilaian');
+        Route::put('/staff/verifikasi_ujian/lembar_penilaian/update/{id}', [SuratController::class, 'lembar_penilaian_update'])->name('s-lembar_penilaian_update');
 
+        
         Route::get('surat_undangan/{id}', [SuratController::class, 'surat_undangan'])->name('surat_undangan');
         Route::get('lembar_penilaian/{id}', [SuratController::class, 'lembar_penilaian'])->name('lembar_penilaian');
         Route::get('berita_acara_skripsi/{id}', [SuratController::class, 'berita_acara_skripsi'])->name('berita_acara_skripsi');
+        Route::put('/staff/verifikasi_ujian/berita_acara/update/{id}', [SuratController::class, 'berita_acara_skripsi_update'])->name('s-berita_acara_skripsi_update');
     });
 
     // Route Mahasiswa
@@ -123,8 +127,16 @@ Route::middleware(['auth'])->group(function () {
 
     // Route Dosen
     Route::middleware(['can:dosen'])->group(function () {
-        Route::get('/dosen/dashboard', function () {
-            return view('dosen.index');
-        });
+        Route::get('/dosen/dashboard', [DosenController::class, 'dashboard'])->name('d-dashboard');
+        Route::get('/dosen/mahasiswa/bimbingan', [DosenController::class, 'bimbingan'])->name('d-mahasiswa_bimbingan');
+        Route::get('/dosen/mahasiswa/penguji', [DosenController::class, 'penguji'])->name('d-mahasiswa_penguji');
+
+        // Profil
+        Route::get('/dosen/profil', [DosenController::class, 'profil']);
+        Route::put('/dosen/profil/update-foto', [DosenController::class, 'updateFotoProfil']);
+        Route::put('/dosen/profil/update-data', [DosenController::class, 'updateDataProfil']);
+
+        // Ganti Password
+        Route::put('/dosen/profil/ganti-password', [DosenController::class, 'passwordDosen']);
     });
 });

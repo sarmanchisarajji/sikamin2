@@ -1,6 +1,6 @@
 <div class="sidebar" id="sidebar">
     <?php
-    // Tentukan route yang sedang aktif
+    
         $currentRoute = request()->route()->getName();
     ?>
     <div class="sidebar-inner slimscroll">

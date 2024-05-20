@@ -3,7 +3,7 @@
 <div class="py-3 px-3 container-fluid">
    <div class="row mb-4">
       <div class="col-md-4 col-12">
-         <div class="bg-comman w-100 mb-3" style="background-color: salmon">
+         <div class="bg-comman w-100 mb-3" style="background-color: #1d9bf0">
             <div class="card-body">
                <div class="db-widgets d-flex justify-content-between align-items-center">
                   <div class="">
@@ -13,7 +13,7 @@
                </div>
             </div>
          </div>
-         <div class="bg-comman w-100 mb-3 mb-md-0" style="background-color: lightgreen">
+         <div class="bg-comman w-100 mb-3 mb-md-0" style="background-color: #fe643b">
             <div class="card-body">
                <div class="db-widgets d-flex justify-content-between align-items-center">
                   <div class="">
@@ -25,7 +25,7 @@
          </div>
       </div>
       <div class="col-md-8 col-12">
-         <div class="bg-comman w-100 h-100" style="background-color: lightskyblue;">
+         <div class="bg-comman w-100 h-100" style="background-color: #1877f2;">
             <div class="card-body">
                <div class="db-widgets">
                   <div>
@@ -52,7 +52,6 @@
          </div>
       </div>
    </div>
-
    <div class="student-group-form">
       <div class="row">
          <div class="col-lg-10 col-md-10">
@@ -99,7 +98,9 @@
                         {{ $item->ujian[2]->judul }}
                         @endif
                      </li>
-                     <li class="col-1 rounded-pill text-white {{ $item->status == 'aktif' ? 'bg-warning' : 'bg-info' }}">Aktif</li>
+                     <li
+                        class="col-1 rounded-pill text-white {{ $item->status == 'aktif' ? 'bg-warning' : 'bg-info' }}">
+                        Aktif</li>
                      <li class="col-1">2020</li>
                      <li class="col-1">
                         <i class="fas fa-chevron-down collapsed p-2 rounded-pill"

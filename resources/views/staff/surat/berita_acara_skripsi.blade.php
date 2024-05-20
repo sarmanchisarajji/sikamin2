@@ -232,7 +232,7 @@
                   <table>
                      <tr>
                         <td>
-                           <p style="font-style: bold">{{ $ujian->penguji_1->nama_dosen }}</p>
+                           <p style="font-style: bold">{{ $ujian->nama_ttd }}</p>
                            <p>{{ $ujian->penguji_1->nip }}</p>
                         </td>
                      </tr>

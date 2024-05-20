@@ -7,27 +7,11 @@
    <div class="d-md-flex justify-content-evenly">
       <div class="col-md-4 col-12">
          <div class="bg-white px-4 py-4">
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="{{ route('s-lembar_penilaian_update', $ujian->id) }}" method="post"
+               enctype="multipart/form-data">
                @csrf
                @method('PUT')
-               <div class="form-group local-forms">
-                  <label>PLH/PLT (optional) <span class="login-danger">*</span></label>
-                  <select class="form-control select" name="plhplt">
-                     <option selected disabled></option>
-                     <option value="PLH">PLH</option>
-                     <option value="PLT">PLT</option>
-                  </select>
-               </div>
-               <div class="form-group local-forms">
-                  <label>Yang Bertanda Tangan <span class="login-danger">*</span></label>
-                  <select class="form-control select" name="nama_ttd">
-                     <option selected disabled></option>
-                     @foreach ($ttd as $item)
-                     <option value="{{ $item->nama_dosen }}">{{ $item->nama_dosen }}</option>
-                     @endforeach
-                  </select>
-               </div>
-               {{-- <label for="">Upload Ulang File Berisi TTD (Scan PDF)</label>
+               <label for="file">Upload Ulang File Berisi TTD (Scan PDF)</label>
                <div>
                   <label class="custum-file-upload" for="file">
                      <div class="icon">
@@ -41,12 +25,13 @@
                            </g>
                         </svg>
                      </div>
-                     <div class="text">
-                        <span>Click to upload image</span>
+                     <div class="text" id="filename">
+                        <span>{{ !empty($ujian->lembar_penilaian) ? $ujian->lembar_penilaian : 'Tekan untuk upload file'
+                           }}</span>
                      </div>
-                     <input type="file" id="file" name="ba">
+                     <input type="file" id="file" name="lembar_penilaian" onchange="displayFileName()">
                   </label>
-               </div> --}}
+               </div>
                <div class="mt-4">
                   <button class="btn btn-primary col-12" type="submit">Kirim</button>
                </div>
@@ -54,8 +39,14 @@
          </div>
       </div>
       <div class="col-md-7 col-12 bg-white p-4">
-         <iframe id="file-iframe" src="{{ route('lembar_penilaian', $ujian->id) }}" align="top" height="800"
-            width="100%" frameborder="0" scrolling="auto"></iframe>
+         @if (!empty($ujian->lembar_penilaian))
+         <embed id="file-iframe"
+            src="{{ asset('storage/' . $ujian->jenis_ujian . '/'. $ujian->mahasiswa->nama . '/' . $ujian->lembar_penilaian) }}"
+            align="top" height="800" width="100%" frameborder="0" scrolling="auto"></embed>
+         @else
+         <embed id="file-iframe" src="{{ route('lembar_penilaian', $ujian->id) }}" align="top" height="800" width="100%"
+            frameborder="0" scrolling="auto"></embed>
+         @endif
       </div>
    </div>
 </div>
@@ -103,4 +94,12 @@
       display: none;
    }
 </style>
+<script>
+   function displayFileName() {
+      const input = document.getElementById('file');
+      const filenameContainer = document.getElementById('filename');
+      const filename = input.files[0].name;
+      filenameContainer.innerHTML = `<span>${filename}</span>`;
+   }
+</script>
 @endsection
