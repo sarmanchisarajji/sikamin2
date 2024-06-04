@@ -15,6 +15,41 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class DosenController extends Controller
 {
+    // public function dashboard()
+    // {
+    //     $dosenId = Dosen::where('id_user', Auth::user()->id)->value('id');
+
+    //     if (!$dosenId) {
+    //         return null;
+    //     }
+
+    //     // Dapatkan semua ujian yang memiliki dosen sebagai pembimbing atau pengujinya
+    //     $ujians = Ujian::where('id_pembimbing_1', $dosenId)
+    //         ->orWhere('id_pembimbing_2', $dosenId)
+    //         ->orWhere('id_penguji_1', $dosenId)
+    //         ->orWhere('id_penguji_2', $dosenId)
+    //         ->orWhere('id_penguji_3', $dosenId)
+    //         ->with('mahasiswa') // Eager load relasi dengan mahasiswa
+    //         ->get();
+
+    //     // Mengakses relasi ujians pada setiap mahasiswa
+    //     foreach ($ujians as $ujian) {
+    //         $mahasiswa = $ujian->mahasiswa;
+    //         if ($mahasiswa && $mahasiswa->ujians) { // Periksa apakah relasi ujians tidak null
+    //             // Dapatkan daftar ujian yang terkait dengan mahasiswa
+    //             $ujiansMahasiswa = $mahasiswa->ujians;
+
+    //             // Lakukan operasi yang diinginkan dengan daftar ujian
+    //             foreach ($ujiansMahasiswa as $ujianMahasiswa) {
+    //                 // Lakukan operasi sesuai kebutuhan
+    //             }
+    //         }
+    //     }
+    //     // dd($ujians);
+    //     return view('dosen.dashboard', [
+    //         'ujian' => $ujians
+    //     ]);
+    // }
     public function dashboard()
     {
         $dosenId = Dosen::where('id_user', Auth::user()->id)->value('id');
@@ -32,24 +67,42 @@ class DosenController extends Controller
             ->with('mahasiswa') // Eager load relasi dengan mahasiswa
             ->get();
 
+        // Inisialisasi variabel untuk menyimpan data
+        $mahasiswaBimbingan = [];
+        $mahasiswaDiuji = [];
+        $totalSelesaiUjian = 0;
+
         // Mengakses relasi ujians pada setiap mahasiswa
         foreach ($ujians as $ujian) {
             $mahasiswa = $ujian->mahasiswa;
-            if ($mahasiswa && $mahasiswa->ujians) { // Periksa apakah relasi ujians tidak null
-                // Dapatkan daftar ujian yang terkait dengan mahasiswa
-                $ujiansMahasiswa = $mahasiswa->ujians;
 
-                // Lakukan operasi yang diinginkan dengan daftar ujian
-                foreach ($ujiansMahasiswa as $ujianMahasiswa) {
-                    // Lakukan operasi sesuai kebutuhan
+            if ($mahasiswa) {
+                // Periksa peran dosen dalam ujian
+                if ($ujian->id_pembimbing_1 == $dosenId || $ujian->id_pembimbing_2 == $dosenId) {
+                    $mahasiswaBimbingan[$mahasiswa->id] = $mahasiswa;
+                } else {
+                    $mahasiswaDiuji[$mahasiswa->id] = $mahasiswa;
+                }
+
+                // Periksa apakah ujian sudah selesai berdasarkan tgl_ujian
+                if (strtotime($ujian->tgl_ujian) < time()) {
+                    $totalSelesaiUjian++;
                 }
             }
         }
-        // dd($ujians);
+
+        // Hitung jumlah mahasiswa bimbingan dan diuji
+        $jumlahMahasiswaBimbingan = count($mahasiswaBimbingan);
+        $jumlahMahasiswaDiuji = count($mahasiswaDiuji);
+
         return view('dosen.dashboard', [
-            'ujian' => $ujians
+            'ujian' => $ujians,
+            'jumlahMahasiswaBimbingan' => $jumlahMahasiswaBimbingan,
+            'jumlahMahasiswaDiuji' => $jumlahMahasiswaDiuji,
+            'totalSelesaiUjian' => $totalSelesaiUjian,
         ]);
     }
+
 
     public function bimbingan()
     {
@@ -101,10 +154,14 @@ class DosenController extends Controller
 
     public function profil()
     {
-        $mahasiswa = User::where('id', Auth::user()->id)->first();
+        $dosen = User::where('id', Auth::user()->id)
+            ->with('dosen')
+            ->first();
+
+        // dd($dosen);
         $user = Auth::user();
         return view('dosen.profil', [
-            'mahasiswa' => $mahasiswa,
+            'dosen' => $dosen,
             'user' => $user
         ]);
     }
@@ -140,11 +197,14 @@ class DosenController extends Controller
     public function updateDataProfil(Request $request)
     {
         $user = Auth::user();
-        $mahasiswa = $user->mahasiswa;
+        $dosen = $user->dosen;
+
+        // dd($dosen);
 
         $validatedData = $request->validate([
             'nama' => 'required',
-            'nim' => 'required|unique:mahasiswas,nim,' . $mahasiswa->id,
+            'nip' => 'required|unique:dosens,nip,' . $dosen->id,
+            'nidn' => 'required|unique:dosens,nidn,' . $dosen->id,
             'username' => 'required|unique:users,username,' . $user->id,
             'email' => 'required|email|unique:users,email,' . $user->id,
             'no_hp' => 'required',
@@ -157,9 +217,10 @@ class DosenController extends Controller
             'no_hp' => $validatedData['no_hp']
         ]);
 
-        $mahasiswa->update([
+        $dosen->update([
             'nama' => $validatedData['nama'],
-            'nim' => $validatedData['nim']
+            'nip' => $validatedData['nip'],
+            'nidn' => $validatedData['nidn']
         ]);
 
         Alert::success('Data profil berhasil diperbarui', session('success'));
@@ -194,5 +255,4 @@ class DosenController extends Controller
         return redirect()->back();
         // return redirect()->back()->with('success', 'Kata sandi berhasil diperbarui');
     }
-
 }

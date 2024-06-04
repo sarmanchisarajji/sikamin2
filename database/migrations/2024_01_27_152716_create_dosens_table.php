@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('jabatan_akademik', ['dosen', 'sekjur', 'kajur']);
             $table->date('tmt_akademik')->nullable();
             $table->enum('status', ['aktif', 'tidak aktif', 'tugas belajar']);
-            $table->string('pangkat');
+            $table->string('pangkat')->nullable();
             $table->date('tmt_pangkat')->nullable();
             $table->string('pendidikan_terakhir')->nullable();
             $table->timestamps();

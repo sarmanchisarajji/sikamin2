@@ -62,8 +62,8 @@ class SuratController extends Controller
     {
         $ujian = Ujian::find($id);
         $ttd = Dosen::where('jabatan_akademik', 'kajur')
-        ->orWhere('jabatan_akademik', 'sekjur')
-        ->get();
+            ->orWhere('jabatan_akademik', 'sekjur')
+            ->get();
         return view('staff.draf.sk_penguji', [
             'ujian' => $ujian,
             'ttd' => $ttd
@@ -74,7 +74,7 @@ class SuratController extends Controller
     {
         $ujian = Ujian::with('mahasiswa')->find($id);
         $ttd = Dosen::where('jabatan_akademik', 'sekjur')
-        ->get();
+            ->get();
         $pdf = PDF::loadView('/staff/surat/sk_penguji', [
             'ujian' => $ujian,
             'ttd' => $ttd
@@ -103,7 +103,7 @@ class SuratController extends Controller
 
         toast('Berhasil Melengkapi Undangan Proposal', 'success');
         return redirect()->back();
-    }    
+    }
     // SK PENGUJI
 
     public function berita_acara_view($id)
@@ -143,8 +143,8 @@ class SuratController extends Controller
         $ujian = Ujian::where('id', $id)->with('mahasiswa')->firstOrFail();
         if ($req->hasFile('ba')) {
             $file = $req->file('ba');
-            $fileName = 'Berita Acara ' . $ujian->mahasiswa->nama . '.'. $file->getClientOriginalExtension();
-            $file->storeAs($ujian->jenis_ujian. '/'. $ujian->mahasiswa->nama . '/' , $fileName);
+            $fileName = 'Berita Acara ' . $ujian->mahasiswa->nama . '.' . $file->getClientOriginalExtension();
+            $file->storeAs($ujian->jenis_ujian . '/' . $ujian->mahasiswa->nama . '/', $fileName);
             $ujian->ba = $fileName;
         }
         $ujian->plhplt = $req->input('plhplt');
@@ -202,7 +202,7 @@ class SuratController extends Controller
         toast('Berhasil Melengkapi Undangan Proposal', 'success');
         return redirect()->back();
     }
-    
+
     public function lembar_penilaian($id)
     {
         $ujian = Ujian::with('mahasiswa')->find($id);
@@ -251,8 +251,12 @@ class SuratController extends Controller
     public function berita_acara_skripsi($id)
     {
         $ujian = Ujian::with('mahasiswa')->find($id);
+        $ttd = Dosen::where('jabatan_akademik', 'kajur')
+            ->orWhere('jabatan_akademik', 'sekjur')
+            ->get();
         $pdf = PDF::loadView('/staff/surat/berita_acara_skripsi', [
             'ujian' => $ujian,
+            'ttd' => $ttd,
         ]);
         $pdf->setPaper('legal', 'portrait');
         return $pdf->stream();

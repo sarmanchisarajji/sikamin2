@@ -33,13 +33,13 @@ class StaffController extends Controller
         $hasil = Ujian::where('jenis_ujian', 'hasil')->get()->count();
         $skripsi = Ujian::where('jenis_ujian', 'skripsi')->get()->count();
 
-        
+
         return view('staff.dashboard', [
             'mahasiswa' => $mahasiswa,
             'dosen' => $dosen,
             'proposal' => $proposal,
             'hasil' => $hasil,
-            'skripsi' => $skripsi  
+            'skripsi' => $skripsi
 
         ]);
     }
@@ -278,18 +278,18 @@ class StaffController extends Controller
     public function monitoring_dosen()
     {
         $dosens = Dosen::with('user')
-        ->select(
-            'dosens.*',
-            DB::raw('(SELECT COUNT(DISTINCT CASE 
+            ->select(
+                'dosens.*',
+                DB::raw('(SELECT COUNT(DISTINCT CASE 
                 WHEN uj1.id_pembimbing_1 = dosens.id THEN uj1.id_mahasiswa 
                 WHEN uj1.id_pembimbing_2 = dosens.id THEN uj1.id_mahasiswa 
             END) 
             FROM ujians uj1 
             WHERE uj1.id_pembimbing_1 = dosens.id OR uj1.id_pembimbing_2 = dosens.id) as total_bimbingan'),
-            DB::raw('(SELECT COUNT(DISTINCT uj2.id_mahasiswa) 
+                DB::raw('(SELECT COUNT(DISTINCT uj2.id_mahasiswa) 
                 FROM ujians uj2 
                 WHERE uj2.id_penguji_1 = dosens.id OR uj2.id_penguji_2 = dosens.id OR uj2.id_penguji_3 = dosens.id) as total_pengujian')
-        )
+            )
             ->get();
 
         foreach ($dosens as $dosen) {
@@ -322,7 +322,7 @@ class StaffController extends Controller
                 $mahasiswasPenguji[$mahasiswa->id] = [
                     'nama' => $mahasiswa->nama,
                     'judul' => $judul,
-                ]; 
+                ];
             }
 
             $dosen->mahasiswasBimbingan = array_values($mahasiswasBimbingan);
@@ -374,7 +374,6 @@ class StaffController extends Controller
         return view('staff.v_proposal', [
             'proposal' => $proposal
         ]);
-        
     }
 
     public function verifikasi_hasil()
@@ -420,7 +419,21 @@ class StaffController extends Controller
         ]);
 
         toast('Berhasil Memverifikasi Ujian', 'success');
-        return redirect()->back();
+        $redirectUrl = $this->getRedirectUrl($ujian->jenis_ujian);
+
+        return redirect($redirectUrl);
+    }
+
+    protected function getRedirectUrl($jenisUjian)
+    {
+        switch ($jenisUjian) {
+            case 'proposal':
+                return route('s-v_proposal-index');
+            case 'hasil':
+                return route('s-v_hasil-index');
+            case 'skripsi':
+                return route('s-v_skripsi-index');
+        }
     }
 
 

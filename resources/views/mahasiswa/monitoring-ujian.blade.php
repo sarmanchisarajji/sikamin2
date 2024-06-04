@@ -100,15 +100,15 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title" id="myLargeModalLabel">Large modal</h4>
+                                    <h4 class="modal-title" id="myLargeModalLabel">Berita Acara Proposal</h4>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="col-md-12 col-12 bg-white p-4">
-                                        <iframe id="file-iframe"
+                                        <embed id="file-embed"
                                             src="{{ route('surat_berita_acara_mahasiswa', $ujian->id) }}" align="top"
-                                            height="800" width="100%" frameborder="0" scrolling="auto"></iframe>
+                                            height="800" width="100%" frameborder="0" scrolling="auto"></embed>
                                     </div>
                                 </div>
                             </div>
@@ -120,15 +120,15 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title" id="myLargeModalLabel">Large modal</h4>
+                                    <h4 class="modal-title" id="myLargeModalLabel">Undangan Proposal</h4>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="col-md-12 col-12 bg-white p-4">
-                                        <iframe id="file-iframe" src="{{ route('surat_undangan_mahasiswa', $ujian->id) }}"
+                                        <embed id="file-embed" src="{{ route('surat_undangan_mahasiswa', $ujian->id) }}"
                                             align="top" height="800" width="100%" frameborder="0"
-                                            scrolling="auto"></iframe>
+                                            scrolling="auto"></embed>
                                     </div>
                                 </div>
                             </div>
@@ -141,15 +141,15 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title" id="myLargeModalLabel">Large modal</h4>
+                                    <h4 class="modal-title" id="myLargeModalLabel">Berita Acara Hasil</h4>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="col-md-12 col-12 bg-white p-4">
-                                        <iframe id="file-iframe"
+                                        <embed id="file-embed"
                                             src="{{ route('surat_berita_acara_mahasiswa', $ujian->id) }}" align="top"
-                                            height="800" width="100%" frameborder="0" scrolling="auto"></iframe>
+                                            height="800" width="100%" frameborder="0" scrolling="auto"></embed>
                                     </div>
                                 </div>
                             </div>
@@ -161,15 +161,15 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title" id="myLargeModalLabel">Large modal</h4>
+                                    <h4 class="modal-title" id="myLargeModalLabel">Undangan Hasil</h4>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="col-md-12 col-12 bg-white p-4">
-                                        <iframe id="file-iframe"
-                                            src="{{ route('surat_undangan_mahasiswa', $ujian->id) }}" align="top"
-                                            height="800" width="100%" frameborder="0" scrolling="auto"></iframe>
+                                        <embed id="file-embed" src="{{ route('surat_undangan_mahasiswa', $ujian->id) }}"
+                                            align="top" height="800" width="100%" frameborder="0"
+                                            scrolling="auto"></embed>
                                     </div>
                                 </div>
                             </div>
@@ -182,15 +182,15 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title" id="myLargeModalLabel">Large modal</h4>
+                                    <h4 class="modal-title" id="myLargeModalLabel">Berita Acara Skripsi</h4>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="col-md-12 col-12 bg-white p-4">
-                                        <iframe id="file-iframe"
+                                        <embed id="file-embed"
                                             src="{{ route('surat_berita_acara_mahasiswa', $ujian->id) }}" align="top"
-                                            height="800" width="100%" frameborder="0" scrolling="auto"></iframe>
+                                            height="800" width="100%" frameborder="0" scrolling="auto"></embed>
                                     </div>
                                 </div>
                             </div>
@@ -202,15 +202,15 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title" id="myLargeModalLabel">Large modal</h4>
+                                    <h4 class="modal-title" id="myLargeModalLabel">Undangan Skripsi</h4>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="col-md-12 col-12 bg-white p-4">
-                                        <iframe id="file-iframe"
-                                            src="{{ route('surat_undangan_mahasiswa', $ujian->id) }}" align="top"
-                                            height="800" width="100%" frameborder="0" scrolling="auto"></iframe>
+                                        <embed id="file-embed" src="{{ route('surat_undangan_mahasiswa', $ujian->id) }}"
+                                            align="top" height="800" width="100%" frameborder="0"
+                                            scrolling="auto"></embed>
                                     </div>
                                 </div>
                             </div>
@@ -222,15 +222,15 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title" id="myLargeModalLabel">Large modal</h4>
+                                    <h4 class="modal-title" id="myLargeModalLabel">SK Pembimbing</h4>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="col-md-12 col-12 bg-white p-4">
-                                        <iframe id="file-iframe" src="{{ route('sk_pembimbing_mahasiswa', $ujian->id) }}"
+                                        <embed id="file-embed" src="{{ route('sk_pembimbing_mahasiswa', $ujian->id) }}"
                                             align="top" height="800" width="100%" frameborder="0"
-                                            scrolling="auto"></iframe>
+                                            scrolling="auto"></embed>
                                     </div>
                                 </div>
                             </div>
@@ -242,15 +242,15 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title" id="myLargeModalLabel">Large modal</h4>
+                                    <h4 class="modal-title" id="myLargeModalLabel">SK Penguji</h4>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="col-md-12 col-12 bg-white p-4">
-                                        <iframe id="file-iframe" src="{{ route('sk_penguji_mahasiswa', $ujian->id) }}"
+                                        <embed id="file-embed" src="{{ route('sk_penguji_mahasiswa', $ujian->id) }}"
                                             align="top" height="800" width="100%" frameborder="0"
-                                            scrolling="auto"></iframe>
+                                            scrolling="auto"></embed>
                                     </div>
                                 </div>
                             </div>
@@ -262,15 +262,15 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title" id="myLargeModalLabel">Large modal</h4>
+                                    <h4 class="modal-title" id="myLargeModalLabel">Lembar Penilaian</h4>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="col-md-12 col-12 bg-white p-4">
-                                        <iframe id="file-iframe"
+                                        <embed id="file-embed"
                                             src="{{ route('lembar_penilaian_mahasiswa', $ujian->id) }}" align="top"
-                                            height="800" width="100%" frameborder="0" scrolling="auto"></iframe>
+                                            height="800" width="100%" frameborder="0" scrolling="auto"></embed>
                                     </div>
                                 </div>
                             </div>

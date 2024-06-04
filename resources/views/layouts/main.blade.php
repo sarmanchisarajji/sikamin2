@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <title>Mahasiswa Dashboard</title>
-    <link rel="shortcut icon" href="assets/img/favicon.png">
+    <title>Sistem Pengajuan Tugas Akhir</title>
+    <link rel="shortcut icon" href="{{ url('') }}/assets/img/favicon.ico">
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700&display=swap"rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('') }}assets/plugins/bootstrap/css/bootstrap.min.css">
@@ -52,7 +52,7 @@
     <script src="{{ asset('') }}assets/js/script.js"></script>
     <script src="{{ asset('') }}assets/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="{{ asset('') }}assets/plugins/datatables/datatables.min.js"></script>
-    <script src="{{ asset('')}}assets/plugins/simple-calendar/jquery.simple-calendar.js"></script>
+    <script src="{{ asset('') }}assets/plugins/simple-calendar/jquery.simple-calendar.js"></script>
     <script src="{{ asset('') }}assets/js/calander.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 

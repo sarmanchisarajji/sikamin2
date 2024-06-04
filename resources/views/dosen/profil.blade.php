@@ -5,9 +5,9 @@
         <div class="page-header">
             <div class="row">
                 <div class="col">
-                    <h3 class="page-title">Profil Mahasiswa</h3>
+                    <h3 class="page-title">Profil Dosen</h3>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ url('/') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('d-dashboard') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active">Profil</li>
                     </ul>
                 </div>
@@ -26,19 +26,19 @@
                     <div class="row align-items-center">
                         <div class="col-auto profile-image">
                             <a href="#">
-                               @if (Auth::user()->foto == null)
-                                <img class="rounded-circle" src="{{ asset('assets\img\profile.png')  }}" width="31"
-                                    alt="{{ Auth::user()->nama_pengguna }}">
+                                @if (Auth::user()->foto == null)
+                                    <img class="rounded-circle" src="{{ asset('assets\img\profile.png') }}" width="31"
+                                        alt="{{ Auth::user()->nama_pengguna }}">
                                 @else
-                                <img class="rounded-circle" src="{{ asset('storage/' . Auth::user()->foto) }}" width="31"
-                                    alt="{{ Auth::user()->nama_pengguna }}">
+                                    <img class="rounded-circle" src="{{ asset('storage/' . Auth::user()->foto) }}"
+                                        width="31" alt="{{ Auth::user()->nama_pengguna }}">
                                 @endif
                             </a>
                         </div>
                         <div class="col ms-md-n2 profile-user-info">
-                            <h4 class="user-name mb-0">{{ $mahasiswa->nama }}</h4>
-                            <h6 class="text-muted">{{ $mahasiswa->nim }}</h6>
-                            <div class="about-text">Jurusan Teknik Informatika Angkatan</div>
+                            <h4 class="user-name mb-0">{{ $dosen->nama }}</h4>
+                            <h6 class="text-muted">{{ $dosen->nim }}</h6>
+                            <div class="about-text">Jurusan Teknik Informatika</div>
                         </div>
                         <div class="col-auto profile-btn">
                             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#fotoModal">
@@ -107,18 +107,23 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title d-flex justify-content-between">
-                                            <span>Detail Mahasiswa</span>
+                                            <span>Detail Dosen</span>
                                             <button class="btn btn-light edit-link" data-bs-toggle="modal"
                                                 data-bs-target="#dataModal"><i class="far fa-edit me-1"></i>Edit</button>
                                         </h5>
                                         <div class="row">
                                             <p class="col-sm-6 text-muted text-sm-end mb-0 mb-sm-3">Nama Lengkap</p>
-                                            <p class="col-sm-6">{{ $mahasiswa->nama_pengguna }}</p>
+                                            <p class="col-sm-6">{{ $dosen->nama_pengguna }}</p>
                                         </div>
                                         <div class="row">
-                                            <p class="col-sm-6 text-muted text-sm-end mb-0 mb-sm-3">Nomor Induk Mahasiswa
+                                            <p class="col-sm-6 text-muted text-sm-end mb-0 mb-sm-3">NIP
                                             </p>
-                                            <p class="col-sm-6">{{ $mahasiswa->nim }}</p>
+                                            <p class="col-sm-6">{{ $dosen->dosen->nip }}</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-sm-6 text-muted text-sm-end mb-0 mb-sm-3">NIDN
+                                            </p>
+                                            <p class="col-sm-6">{{ $dosen->dosen->nidn }}</p>
                                         </div>
                                         <div class="row">
                                             <p class="col-sm-6 text-muted text-sm-end mb-0 mb-sm-3">Username Akun
@@ -167,7 +172,7 @@
                                                     <input type="text" name="nama"
                                                         @error('nama') is-invalid @enderror class="form-control"
                                                         id="nama" placeholder="Masukkan Nama Lengkap"
-                                                        value="{{ old('nama', $mahasiswa->nama) }}" required>
+                                                        value="{{ old('nama', $dosen->dosen->nama_dosen) }}" required>
                                                     @error('nama')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
@@ -175,12 +180,24 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="mb-3">
-                                                    <label for="nim" class="form-label">NIM</label>
-                                                    <input type="text" name="nim"
+                                                    <label for="nim" class="form-label">NIP</label>
+                                                    <input type="text" name="nip"
                                                         @error('nim') is-invalid @enderror class="form-control"
                                                         id="nim" placeholder="Masukkan NIM"
-                                                        value="{{ old('nim', $mahasiswa->nim) }}" required>
+                                                        value="{{ old('nim', $dosen->dosen->nip) }}" required>
                                                     @error('nim')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="mb-3">
+                                                    <label for="nidn" class="form-label">NIDN</label>
+                                                    <input type="text" name="nidn"
+                                                        @error('nidn') is-invalid @enderror class="form-control"
+                                                        id="nidn" placeholder="Masukkan NIDN"
+                                                        value="{{ old('nidn', $dosen->dosen->nidn) }}" required>
+                                                    @error('nidn')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
