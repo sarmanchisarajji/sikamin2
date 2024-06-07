@@ -37,23 +37,59 @@
                 <div class="card card-table comman-shadow">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="example" class="display table table-hover table-striped" style="width:100%">
+                            <table id="excelTable" class="display table table-hover table-striped" style="width:100%">
                                 <thead class="student-thread">
                                     <tr class="text-center">
-                                        <th style="background-color: #3d5ee1" class="text-white col-1">No</th>
-                                        <th style="background-color: #3d5ee1" class="text-white col-3">Nama Lengkap</th>
-                                        <th style="background-color: #3d5ee1" class="text-white col-2">NIM</th>
-                                        <th style="background-color: #3d5ee1" class="text-white col-5">Judul</th>
-
+                                        <th style="background-color: #3d5ee1" class="excel-column text-white col-1">No</th>
+                                        <th style="background-color: #3d5ee1" class="excel-column text-white col-1 d-none">
+                                            Tanggal Ujian
+                                        </th>
+                                        <th style="background-color: #3d5ee1" class="excel-column text-white col-1 d-none">
+                                            Waktu Ujian
+                                        </th>
+                                        <th style="background-color: #3d5ee1" class="excel-column text-white col-1">Jenis
+                                            Ujian</th>
+                                        <th style="background-color: #3d5ee1" class="excel-column text-white col-3">Nama
+                                            Lengkap</th>
+                                        <th style="background-color: #3d5ee1" class="excel-column text-white col-2">NIM</th>
+                                        <th style="background-color: #3d5ee1" class="excel-column text-white col-5">Judul
+                                        </th>
+                                        <th style="background-color: #3d5ee1" class="excel-column text-white col-5 d-none">
+                                            Tempat Ujian
+                                        </th>
+                                        <th style="background-color: #3d5ee1" class="excel-column text-white col-5 d-none">
+                                            IPK</th>
+                                        <th style="background-color: #3d5ee1" class="excel-column text-white col-5 d-none">
+                                            Pembimbing 1
+                                        </th>
+                                        <th style="background-color: #3d5ee1" class="excel-column text-white col-5 d-none">
+                                            Pembimbing 2
+                                        </th>
+                                        <th style="background-color: #3d5ee1" class="excel-column text-white col-5 d-none">
+                                            Penguji 1</th>
+                                        <th style="background-color: #3d5ee1" class="excel-column text-white col-5 d-none">
+                                            Penguji 2</th>
+                                        <th style="background-color: #3d5ee1" class="excel-column text-white col-5 d-none">
+                                            Penguji 3</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($ujian as $key => $item)
                                         <tr class="text-center">
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->mahasiswa->nama }}</td>
-                                            <td>{{ $item->mahasiswa->nim }}</td>
-                                            <td>{{ $item->judul }}</td>
+                                            <td class="excel-column">{{ $loop->iteration }}</td>
+                                            <td class="excel-column d-none">{{ $item->tanggal_ujian }}</td>
+                                            <td class="excel-column d-none">{{ $item->jam_ujian }}</td>
+                                            <td class="excel-column">{{ Str::ucfirst($item->jenis_ujian) }}</td>
+                                            <td class="excel-column">{{ $item->mahasiswa->nama }}</td>
+                                            <td class="excel-column">{{ $item->mahasiswa->nim }}</td>
+                                            <td class="excel-column">{{ $item->judul }}</td>
+                                            <td class="excel-column d-none">{{ $item->tempat_ujian }}</td>
+                                            <td class="excel-column d-none">{{ $item->ipk_sementara }}</td>
+                                            <td class="excel-column d-none">{{ $item->pembimbing_1->nama_dosen }}</td>
+                                            <td class="excel-column d-none">{{ $item->pembimbing_2->nama_dosen }}</td>
+                                            <td class="excel-column d-none">{{ $item->penguji_1->nama_dosen }}</td>
+                                            <td class="excel-column d-none">{{ $item->penguji_2->nama_dosen }}</td>
+                                            <td class="excel-column d-none">{{ $item->penguji_3->nama_dosen }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

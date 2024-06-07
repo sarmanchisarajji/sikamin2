@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{ asset('') }}assets/plugins/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('') }}assets/css/style.css">
     <link rel="stylesheet" href="{{ asset('') }}assets/plugins/datatables/datatables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="{{ asset('') }}assets/plugins/simple-calendar/simple-calendar.css">
 </head>
 
@@ -52,6 +53,10 @@
     <script src="{{ asset('') }}assets/js/script.js"></script>
     <script src="{{ asset('') }}assets/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="{{ asset('') }}assets/plugins/datatables/datatables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+
     <script src="{{ asset('') }}assets/plugins/simple-calendar/jquery.simple-calendar.js"></script>
     <script src="{{ asset('') }}assets/js/calander.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -63,6 +68,31 @@
             "autoWidth": false,
             // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
         }).buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');
+    </script>
+    <script>
+        $(document).ready(function() {
+            var table = $("#excelTable").DataTable({
+                "responsive": true,
+                "lengthChange": true,
+                "autoWidth": false,
+                "dom": 'Bfrtip',
+                "buttons": [{
+                    extend: 'excelHtml5',
+                    text: 'Export File Excel',
+                    className: 'text-white rounded-2',
+                    attr: {
+                        style: 'background-color: #3d5ee1;'
+                    },
+                    filename: 'Daftar Monitoring Ujian',
+                    title: null,
+                    exportOptions: {
+                        columns: '.excel-column',
+                    }
+                }]
+            });
+
+            table.buttons().container().appendTo('#excel-table_wrapper .col-md-6:eq(0)');
+        });
     </script>
 
 </body>
