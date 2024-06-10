@@ -485,11 +485,11 @@ class StaffController extends Controller
     public function bukti_dukung($id)
     {
         $file = Filebukti::where('id_ujian', $id)->get();
-        $mahasiswa = Ujian::where('id', $id)->get();
+        $ujian = Ujian::findOrFail($id);
 
         return view('staff.bukti_dukung', [
             'file' => $file,
-            'mahasiswa' => $mahasiswa
+            'ujian' => $ujian
         ]);
     }
 }

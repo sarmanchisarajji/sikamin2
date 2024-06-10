@@ -17,8 +17,10 @@ class FilebuktiController extends Controller
         confirmDelete($title, $text);
 
         $buktis = Filebukti::where('id_ujian', $id_ujian)->get();
+        $ujian = Ujian::findOrFail($id_ujian);
         return view('mahasiswa.bukti-dukung', [
             'buktis' => $buktis,
+            'jenis_ujian' => $ujian->jenis_ujian,
             'id_ujian' => $id_ujian
         ]);
     }

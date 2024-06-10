@@ -40,10 +40,19 @@
                     <h6 class="alert-heading">PEMBERITAHUAN !!! DAFTAR BUKTI DUKUNG YANG PERLU DIUPLOAD :
                     </h6>
                     <ul>
-                        <li>- Lembar Pengesahan</li>
-                        <li>- Sertifikat TOEFL</li>
-                        <li>- Lembar Kontrol Proposal</li>
-                        <li>- SK Pembimbing</li>
+                        @if ($jenis_ujian == 'proposal')
+                            <li>- Lembar Pengesahan</li>
+                            <li>- Sertifikat TOEFL</li>
+                            <li>- Lembar Kontrol Proposal</li>
+                            <li>- SK Pembimbing</li>
+                        @elseif ($jenis_ujian == 'hasil')
+                            <li>- Lembar Pengesahan Hasil</li>
+                            <li>- Lembar Kontrol Hasil</li>
+                        @else
+                            <li>- Lembar Pengesahan Skripsi</li>
+                            <li>- Lembar Kontrol Skripsi</li>
+                        @endif
+
                     </ul>
                 </div>
             </div>

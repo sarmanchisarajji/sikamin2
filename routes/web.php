@@ -62,7 +62,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/staff/verifikasi_ujian/proposal', [StaffController::class, 'verifikasi_proposal'])->name('s-v_proposal-index');
         Route::get('/staff/verifikasi_ujian/hasil', [StaffController::class, 'verifikasi_hasil'])->name('s-v_hasil-index');
         Route::get('/staff/verifikasi_ujian/skripsi', [StaffController::class, 'verifikasi_skripsi'])->name('s-v_skripsi-index');
-        Route::get('/staff/verifikasi_ujian/proposal/bukti_dukung/{id}', [StaffController::class, 'bukti_dukung'])->name('s-bukti_dukung');
+        Route::get('/staff/verifikasi_ujian/bukti_dukung/{id}', [StaffController::class, 'bukti_dukung'])->name('s-bukti_dukung');
         Route::get('/staff/verifikasi_ujian/{id}', [StaffController::class, 'verifikasi_ujian_form'])->name('s-v_ujian_form');
         Route::put('/staff/verifikasi_ujian/update/{id}', [StaffController::class, 'verifikasi_ujian_update'])->name('s-v_ujian-update');
 
