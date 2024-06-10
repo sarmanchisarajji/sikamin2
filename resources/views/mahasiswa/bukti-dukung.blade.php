@@ -15,11 +15,18 @@
                 </div>
             </div>
         </div>
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <div class="row">
             <div class="col-sm-12">
-                @if (session('success'))
-                    @include('mahasiswa.components.alert-success', ['message' => session('success')])
-                @endif
                 <div class="card card-table comman-shadow">
                     <div class="card-body">
                         <div class="page-header">
@@ -61,12 +68,6 @@
                                                     method="POST" id="deleteFile{{ $bukti->id }}">
                                                     @method('delete')
                                                     @csrf
-                                                    {{-- <span>
-                                                        <button onclick="return confirm('Lanjutkan untuk menghapus?')"
-                                                            type="submit" class="btn btn-sm btn-danger" title="Hapus">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </span> --}}
                                                     <span>
                                                         <button type="button" class="btn btn-sm btn-danger"
                                                             onclick="confirmDelete('{{ $bukti->id }}')" title="Hapus">

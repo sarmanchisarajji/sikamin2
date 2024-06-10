@@ -68,9 +68,12 @@
                 <td class="title">Nomor</td>
                 <td style="vertical-align: top; padding-right: 3px;">:</td>
                 @if ($ujian->no_surat_undangan == null)
-                    <td class="col-6"><span style="padding-right: 30px"> </span>/UN29.10/PP/{{ date('Y') }}</td>
+                    <td class="col-6"><span style="padding-right: 30px"></span>/UN29.10/PP/{{ date('Y') }}</td>
                 @else
-                    <td class="col-6"><span style=""> </span>{{ $ujian->no_surat_undangan }}</td>
+                    <td class="col-6">
+                        <span style=""></span>
+                        {{ $ujian->no_surat_undangan }}/UN29.10/PP/{{ date('Y') }}
+                    </td>
                 @endif
                 <td class="col-6">Kendari,
                     {{ \Carbon\Carbon::parse($ujian->updated_at)->locale('id_ID')->isoFormat('DD MMMM YYYY') }}</td>
@@ -89,8 +92,10 @@
 
         <div style="margin-top: 20px">
             <p>Dengan hormat,<br>
-                Kami mengundang Bapak/Ibu untuk menghadiri Ujian Seminar Proposal Mahasiswa tersebut <br>
-                di bawah ini :</p>
+                Kami mengundang Bapak/Ibu untuk menghadiri Ujian Seminar {{ Str::ucfirst($ujian->jenis_ujian) }}
+                Mahasiswa tersebut <br>
+                di bawah ini :
+            </p>
         </div>
 
         <table style="text-align: start; width: 100%;">
@@ -130,7 +135,27 @@
             <tr>
                 <td class="title">Tempat</td>
                 <td style="vertical-align: top; padding-right: 3px;">:</td>
-                <td class="">{{ $ujian->tempat_ujian }}</td>
+                @if ($ujian->tempat_ujian == 'jurusan')
+                    {
+                    <td class="">Ruang Jurusan Teknik Informatika</td>
+                    }
+                @elseif ($ujian->tempat_ujian == 'lab_ai')
+                    {
+                    <td class="">Laboratorium CS & AI</td>
+                    }
+                @elseif ($ujian->tempat_ujian == 'lab_se')
+                    {
+                    <td class="">Laboratorium Software Engineering</td>
+                    }
+                @elseif ($ujian->tempat_ujian == 'lab_jaringan')
+                    {
+                    <td class="">Laboratorium Komputasi Berbasis Jaringan</td>
+                    }
+                @else
+                    {
+                    <td class="">Online (Zoom/Google Meet)</td>
+                    }
+                @endif
             </tr>
         </table>
 
@@ -146,7 +171,9 @@
             <tr>
                 <td class="title">Sekretaris</td>
                 <td style="vertical-align: top; padding-right: 3px;">:</td>
-                <td class="">{{ $ujian->sekretaris_sidang }}</td>
+                @foreach ($ttd as $item)
+                    <td class="">{{ $item->nama_dosen }}</td>
+                @endforeach
             </tr>
         </table>
         <table style="margin-top: 20px">

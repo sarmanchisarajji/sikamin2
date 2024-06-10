@@ -27,14 +27,17 @@ class FilebuktiController extends Controller
         $validatedData = $request->validate(
             [
                 'nama_berkas' => 'required',
-                'file' => 'required|file|mimes:doc,docx,xls,xlsx,pdf'
+                'file' => 'required|file|mimes:doc,docx,xls,xlsx,pdf|max:1024'
             ],
             [
                 'nama_berkas.required' => 'Nama berkas tidak boleh kosong',
                 'file.required' => 'File tidak boleh kosong',
-                'file.mimes' => 'File harus berupa doc, docx, xls, xlsx, atau pdf'
+                'file.mimes' => 'File harus berupa doc, docx, xls, xlsx, atau pdf',
+                'file.max' => 'File maksimal berukuran 1 MB'
             ]
         );
+
+        // dd($validatedData);
 
         $file = $request->file('file')->store('file-bukti');
         $post = Filebukti::create([
@@ -48,7 +51,7 @@ class FilebuktiController extends Controller
             return redirect("mahasiswa/pengajuan-ujian/bukti-dukung/$id_ujian");
             // return redirect("mahasiswa/pengajuan-ujian/bukti-dukung/$id_ujian")->with('success','Data berhasil ditambahkan');
         } else {
-            return redirect("mahasiswa/pengajuan-ujian/bukti-dukung/$id_ujian")->with('danger', 'Data gagal ditambahkan, periksa kembali file yang Anda masukan');
+            return redirect("mahasiswa/pengajuan-ujian/bukti-dukung/$id_ujian")->with('error', 'Data gagal ditambahkan, periksa kembali file yang Anda masukan maksimal harus berukuran 1 MB');
         }
     }
 
@@ -59,10 +62,11 @@ class FilebuktiController extends Controller
 
         $validatedData = $request->validate([
             'nama_berkas' => 'required',
-            'file' => 'file|mimes:doc,docx,xls,xlsx,pdf'
+            'file' => 'file|mimes:doc,docx,xls,xlsx,pdf|max:1024'
         ], [
             'nama_berkas.required' => 'Nama berkas tidak boleh kosong',
-            'file.mimes' => 'File harus berupa doc, docx, xls, xlsx, atau pdf'
+            'file.mimes' => 'File harus berupa doc, docx, xls, xlsx, atau pdf',
+            'file.max' => 'File maksimal berukuran 1 MB'
         ]);
 
         if ($request->file('file')) {

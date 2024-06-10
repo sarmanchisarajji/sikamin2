@@ -38,7 +38,7 @@ class SuratController extends Controller
     {
         $validatedData = $req->validate([
             'no_surat' => 'nullable|string',
-            'sk_pembimbing' => 'nullable|file|mimes:pdf|max:2048',
+            'sk_pembimbing' => 'nullable|file|mimes:pdf|max:1024',
 
         ]);
 
@@ -87,7 +87,7 @@ class SuratController extends Controller
     {
         $validatedData = $req->validate([
             'no_surat' => 'nullable|string',
-            'sk_penguji' => 'nullable|file|mimes:pdf|max:2048',
+            'sk_penguji' => 'nullable|file|mimes:pdf|max:1024',
 
         ]);
 
@@ -137,7 +137,7 @@ class SuratController extends Controller
         $validatedData = $req->validate([
             'no_surat' => 'nullable|string',
             'nama_ttd' => 'required|string',
-            'ba' => 'nullable|file|mimes:pdf|max:2048',
+            'ba' => 'nullable|file|mimes:pdf|max:1024',
         ]);
 
         $ujian = Ujian::where('id', $id)->with('mahasiswa')->firstOrFail();
@@ -185,7 +185,7 @@ class SuratController extends Controller
     {
         $validatedData = $req->validate([
             'no_surat' => 'nullable|string',
-            'undangan' => 'nullable|file|mimes:pdf|max:2048',
+            'undangan' => 'nullable|file|mimes:pdf|max:1024',
 
         ]);
 
@@ -231,7 +231,7 @@ class SuratController extends Controller
     public function lembar_penilaian_update(Request $req, $id)
     {
         $validatedData = $req->validate([
-            'lembar_penilaian' => 'nullable|file|mimes:pdf|max:2048',
+            'lembar_penilaian' => 'nullable|file|mimes:pdf|max:1024',
 
         ]);
 
@@ -281,7 +281,7 @@ class SuratController extends Controller
         $validatedData = $req->validate([
             'plhplt' => 'nullable|string',
             'nama_ttd' => 'nullable|string',
-            'ba' => 'nullable|file|mimes:pdf|max:2048',
+            'ba' => 'nullable|file|mimes:pdf|max:1024',
 
         ]);
 

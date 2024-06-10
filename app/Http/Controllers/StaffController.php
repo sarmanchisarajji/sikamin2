@@ -26,20 +26,54 @@ class StaffController extends Controller
 
     public function dashboard()
     {
-        $mahasiswa = Mahasiswa::with('ujian')->get();
+        $examCounts = Ujian::selectRaw('MONTH(tanggal_ujian) as month, jenis_ujian, COUNT(*) as count')
+            ->whereYear('tanggal_ujian', date('Y'))
+            ->groupBy('month', 'jenis_ujian')
+            ->get()
+            ->groupBy('jenis_ujian');
+
+        // dd($examCounts);
+
+        // Initialize the arrays to hold the monthly counts
+        $monthlyProposalCounts = array_fill(1, 12, 0);
+        $monthlyHasilCounts = array_fill(1, 12, 0);
+        $monthlySkripsiCounts = array_fill(1, 12, 0);
+
+        // Populate the arrays with the counts from the query results
+        // Populate the arrays with the counts from the query results and ensure the values are within the range 0-100
+        foreach ($examCounts['proposal'] ?? [] as $count) {
+            $monthlyProposalCounts[$count->month] = min(100, max(0, intval($count->count)));
+        }
+
+        foreach ($examCounts['hasil'] ?? [] as $count) {
+            $monthlyHasilCounts[$count->month] = min(100, max(0, intval($count->count)));
+        }
+
+        foreach ($examCounts['skripsi'] ?? [] as $count) {
+            $monthlySkripsiCounts[$count->month] = min(100, max(0, intval($count->count)));
+        }
+
+        $mahasiswa = Mahasiswa::with('ujian')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
 
         $dosen = Dosen::get()->count();
         $proposal = Ujian::where('jenis_ujian', 'proposal')->get()->count();
         $hasil = Ujian::where('jenis_ujian', 'hasil')->get()->count();
         $skripsi = Ujian::where('jenis_ujian', 'skripsi')->get()->count();
 
+        // dd($examCounts);
 
         return view('staff.dashboard', [
             'mahasiswa' => $mahasiswa,
             'dosen' => $dosen,
             'proposal' => $proposal,
             'hasil' => $hasil,
-            'skripsi' => $skripsi
+            'skripsi' => $skripsi,
+            'monthlyProposalCounts' => $monthlyProposalCounts,
+            'monthlyHasilCounts' => $monthlyHasilCounts,
+            'monthlySkripsiCounts' => $monthlySkripsiCounts,
 
         ]);
     }

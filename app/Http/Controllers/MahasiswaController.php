@@ -39,11 +39,11 @@ class MahasiswaController extends Controller
         $user = Auth::user();
         $foto = $user->foto;
         $validatedData = $request->validate([
-            'foto' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2084',
+            'foto' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], [
             'foto.required' => 'Foto profil tidak boleh kosong',
             'foto.mimes' => 'Foto profil harus berupa jpeg, png, jpg, gif atau svg',
-            'foto.max' => 'Foto profil maksimal 1MB',
+            'foto.max' => 'Foto profil maksimal 2MB',
         ]);
 
         if ($request->file('foto')) {

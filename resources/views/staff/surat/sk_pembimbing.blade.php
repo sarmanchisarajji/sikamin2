@@ -38,10 +38,11 @@
                 <img src="./assets/img/logo-uho.png" alt="logo-uho" width="85">
                 <P style="font-weight: bold; padding-top: 5px">KEPUTUSAN</P>
                 <p style="padding-top: 10px">DEKAN FAKULTAS UNIVERSITAS HALU OLEO</p>
-                <p style="padding-top: 5px">NOMOR : {!! $ujian->no_sk_pembimbing
-                    ? $ujian->no_sk_pembimbing
-                    : '
-                                                                                                               /UN29.10/PP/2023' !!}</p>
+                @if ($ujian->no_sk_pembimbing == null)
+                    <p style="padding-top: 5px">NOMOR : /UN29.10/PP/{{ date('Y') }}</p>
+                @else
+                    <p style="padding-top: 5px">NOMOR : {{ $ujian->no_sk_pembimbing }}/UN29.10/PP/{{ date('Y') }}</p>
+                @endif
                 <p style="padding: 10px 0 5px 0">TENTANG</p>
                 <p style="font-weight: bold">PENETAPAN DOSEN PEMBIMBING PENULISAN SKRIPSI MAHASISWA <br>
                     PROGRAM STUDI TEKNIK INFORMATIKA SEMESTER GANJIL 2023/2024</p>
