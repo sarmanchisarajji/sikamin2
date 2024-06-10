@@ -57,7 +57,7 @@
                                                     class="px-3 rounded-pill text-white {{ $item->status == 'diajukan' ? 'bg-warning' : ($item->status == 'dikembalikan' ? 'bg-danger' : 'bg-info') }}">{{ $item->status }}</span>
                                             </td>
                                             <td class="d-flex flex-column">
-                                                <div class="mb-2">
+                                                <div class="mb-1">
                                                     <a href="{{ route('s-bukti_dukung', ['id' => $item->id]) }}"
                                                         class="btn btn-sm text-white"
                                                         style="background-color: rgb(14, 156, 128)">Bukti
@@ -85,25 +85,29 @@
                                                         data-bs-toggle="dropdown" aria-expanded="false"><i
                                                             class="fas fa-ellipsis-h"></i></a>
                                                     <div class="dropdown-menu dropdown-menu-end fs-6">
-                                                        <a class="dropdown-item py-2 {{ $item->status == 'diajukan' ? 'disabled' : '' }}"
+                                                        <a class="dropdown-item py-2 {{ $item->status != 'disetujui' ? 'disabled' : '' }}"
                                                             href="{{ route('s-sk_pembimbing', $item->id) }}">
                                                             SK Pembimbing
                                                         </a>
-                                                        <a class="dropdown-item py-2 {{ $item->status == 'diajukan' ? 'disabled' : '' }}"
+                                                        <a class="dropdown-item py-2 {{ $item->status != 'disetujui' ? 'disabled' : '' }}"
                                                             href="{{ route('s-sk_penguji', $item->id) }}">
                                                             SK Penguji
                                                         </a>
-                                                        <a class="dropdown-item py-2 {{ $item->status == 'diajukan' ? 'disabled' : '' }}"
+                                                        <a class="dropdown-item py-2 {{ $item->status != 'disetujui' ? 'disabled' : '' }}"
                                                             href="{{ route('s-berita_acara_skripsi', $item->id) }}">
                                                             Berita Acara
                                                         </a>
-                                                        <a class="dropdown-item py-2 {{ $item->status == 'diajukan' ? 'disabled' : '' }}"
+                                                        <a class="dropdown-item py-2 {{ $item->status != 'disetujui' ? 'disabled' : '' }}"
                                                             href="{{ route('s-undangan_skripsi', $item->id) }}">
                                                             Undangan Skripsi
                                                         </a>
-                                                        <a class="dropdown-item py-2 {{ $item->status == 'diajukan' ? 'disabled' : '' }}"
+                                                        <a class="dropdown-item py-2 {{ $item->status != 'disetujui' ? 'disabled' : '' }}"
                                                             href="{{ route('s-berita_acara_skripsi', $item->id) }}">
                                                             Lembar Penilaian
+                                                        </a>
+                                                        <a class="dropdown-item py-2 {{ $item->status != 'disetujui' ? 'disabled' : '' }}"
+                                                            href="{{ route('s-sk_dekan', $item->id) }}">
+                                                            SK Dekan
                                                         </a>
                                                     </div>
                                                 </div>

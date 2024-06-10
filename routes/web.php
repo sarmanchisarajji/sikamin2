@@ -84,6 +84,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/staff/verifikasi_ujian/skripsi/sk_penguji/{id}', [SuratController::class, 'sk_penguji_view'])->name('s-sk_penguji');
         Route::put('/staff/verifikasi_ujian/skripsi/sk_penguji/update/{id}', [SuratController::class, 'sk_penguji_update'])->name('s-sk_penguji_update');
 
+        Route::get('/staff/verifikasi_ujian/proposal/sk_dekan/{id}', [SuratController::class, 'sk_dekan_view'])->name('s-sk_dekan');
+        Route::put('/staff/verifikasi_ujian/proposal/sk_dekan/update/{id}', [SuratController::class, 'sk_dekan_update'])->name('s-sk_dekan_update');
+
         Route::get('/staff/verifikasi_ujian/proposal/undangan/{id}', [SuratController::class, 'undangan_view'])->name('s-undangan_proposal');
         Route::get('/staff/verifikasi_ujian/hasil/undangan/{id}', [SuratController::class, 'undangan_view'])->name('s-undangan_hasil');
         Route::get('/staff/verifikasi_ujian/skripsi/undangan/{id}', [SuratController::class, 'undangan_view'])->name('s-undangan_skripsi');

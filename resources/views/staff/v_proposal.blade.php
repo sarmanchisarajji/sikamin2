@@ -93,6 +93,10 @@
                                                             href="{{ route('s-undangan_proposal', $item->id) }}">
                                                             Undangan Proposal
                                                         </a>
+                                                        <a class="dropdown-item py-2 {{ $item->status != 'disetujui' ? 'disabled' : '' }}"
+                                                            href="{{ route('s-sk_dekan', $item->id) }}">
+                                                            SK Dekan
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </td>

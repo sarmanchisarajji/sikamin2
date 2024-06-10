@@ -6,6 +6,7 @@ use App\Models\Dosen;
 use App\Models\Ujian;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class SuratController extends Controller
@@ -152,6 +153,39 @@ class SuratController extends Controller
         $ujian->save();
 
         toast('Berhasil Melengkapi Berita Acara', 'success');
+        return redirect()->back();
+    }
+
+    // sk dekan
+    public function sk_dekan_view($id)
+    {
+        $ujian = Ujian::find($id);
+        return view('staff.draf.sk_dekan', [
+            'ujian' => $ujian,
+        ]);
+    }
+    
+    public function sk_dekan_update(Request $req, $id)
+    {
+        $validatedData = $req->validate([
+            'sk_dekan' => 'nullable|file|mimes:pdf|max:1024',
+        ]);
+
+        $ujian = Ujian::where('id', $id)->with('mahasiswa')->firstOrFail();
+        $file = $ujian->sk_dekan;
+        if ($req->file('sk_dekan')) {
+            if($file){
+                Storage::delete($ujian->sk_dekan);
+            }
+            $fileName = 'SK Dekan ' . $ujian->mahasiswa->nama . '.' . $req->file('sk_dekan')->getClientOriginalExtension();
+            $file = $req->file('sk_dekan')->storeAs('sk_dekan', $fileName);
+        };
+
+        $ujian->update([
+            'sk_dekan' => $file
+        ]);
+       
+        toast('Berhasil Melengkapi SK Dekan', 'success');
         return redirect()->back();
     }
 

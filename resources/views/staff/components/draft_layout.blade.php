@@ -32,6 +32,9 @@
             <li class="nav-item {{ request()->routeIs('s-lembar_penilaian') ? 'active' : '' }} ">
                 <a class="nav-link" href="{{ route('s-lembar_penilaian', $ujian->id) }}">Lembar Penilaian</a>
             </li>
+            <li class="nav-item {{ request()->routeIs('s-sk_dekan') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('s-sk_dekan', $ujian->id) }}">SK Dekan</a>
+            </li>
         @endif
 
         @if ($ujian->jenis_ujian == 'proposal')
@@ -40,6 +43,9 @@
             </li>
             <li class="nav-item {{ request()->routeIs('s-undangan_proposal') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('s-undangan_proposal', $ujian->id) }}">Undangan Proposal</a>
+            </li>
+            <li class="nav-item {{ request()->routeIs('s-sk_dekan') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('s-sk_dekan', $ujian->id) }}">SK Dekan</a>
             </li>
         @endif
 
