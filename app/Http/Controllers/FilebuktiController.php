@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Filebukti;
+use App\Models\Ujian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -46,6 +47,14 @@ class FilebuktiController extends Controller
             'id_ujian' => $id_ujian
         ]);
 
+        $ujian = Ujian::findOrFail($id_ujian);
+        if ($ujian->status == 'dikembalikan') {
+            $ujian->update([
+                'status' => 'diajukan',
+                'catatan' => null
+            ]);
+        }
+
         if ($post) {
             Alert::success('Data berhasil ditambahkan', session('success'));
             return redirect("mahasiswa/pengajuan-ujian/bukti-dukung/$id_ujian");
@@ -78,6 +87,14 @@ class FilebuktiController extends Controller
             'nama_berkas' => $validatedData['nama_berkas'],
             'file' => $file,
         ]);
+
+        $ujian = Ujian::findOrFail($id_ujian);
+        if ($ujian->status == 'dikembalikan') {
+            $ujian->update([
+                'status' => 'diajukan',
+                'catatan' => null
+            ]);
+        }
 
         Alert::success('Data berhasil diupdate', session('success'));
         return redirect("mahasiswa/pengajuan-ujian/bukti-dukung/$id_ujian");

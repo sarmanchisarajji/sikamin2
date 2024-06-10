@@ -17,7 +17,7 @@ return new class extends Migration
             $table->enum('jenis_ujian', ['proposal', 'hasil', 'skripsi']);
             $table->string('judul');
             $table->string('ipk_sementara');
-            $table->enum('status', ['diajukan', 'disetujui'])->default('diajukan');
+            $table->enum('status', ['diajukan', 'dikembalikan', 'disetujui'])->default('diajukan');
             $table->string('nilai_ujian')->nullable();
             $table->string('ketua_sidang')->nullable();
             $table->string('sekretaris_sidang')->nullable();
@@ -37,11 +37,13 @@ return new class extends Migration
             $table->string('sk_pembimbing')->nullable(); // surat tugas ujian
             $table->string('sk_penguji')->nullable(); // surat tugas ujian
             $table->string('lembar_penilaian')->nullable(); // surat tugas ujian
+            $table->string('sk_dekan')->nullable(); // surat sk dekan
             $table->string('no_sk_pembimbing')->nullable();
             $table->string('no_sk_penguji')->nullable();
             $table->string('no_surat_undangan')->nullable();
             $table->string('nama_ttd')->nullable();
             $table->enum('plhplt', ['PLH', 'PLT', ''])->nullable();
+            $table->string('catatan')->nullable();
             $table->timestamps();
             $table->foreign('id_mahasiswa')->references('id')->on('mahasiswas')->onDelete('cascade');
             $table->foreign('id_pembimbing_1')->references('id')->on('dosens')->onDelete('cascade');

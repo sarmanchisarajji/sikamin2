@@ -33,6 +33,20 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="my-3">
+                            @foreach ($ujians as $ujian)
+                                @if ($ujian->status == 'dikembalikan')
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        Pengajuan <strong> ujian {{ $ujian->jenis_ujian }}</strong> Anda telah
+                                        <strong>dikembalikan.</strong>
+                                        Ulangi <strong>upload bukti pendukung </strong> untuk mengajukan ulang ! <br>
+                                        <strong>Catatan : </strong> {{ $ujian->catatan }}
+                                        <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
                         <div class="table-responsive">
                             <table id="example" class="display table table-hover table-striped" style="width:100%">
                                 <thead class="">
@@ -65,8 +79,7 @@
                                                     @csrf
                                                     @method('delete')
                                                     <span>
-                                                        <button type="button"
-                                                            class="btn btn-sm btn-danger"
+                                                        <button type="button" class="btn btn-sm btn-danger"
                                                             onclick="confirmDelete('{{ $ujian->id }}')" title="Hapus">
                                                             <i class="fas fa-trash"></i>
                                                         </button>
@@ -90,6 +103,8 @@
                                             <td>
                                                 @if ($ujian->status == 'diajukan')
                                                     <div class="badge badge-soft-primary">Diajukan</div>
+                                                @elseif ($ujian->status == 'dikembalikan')
+                                                    <div class="badge badge-soft-danger">Dikembalikan</div>
                                                 @elseif ($ujian->status == 'disetujui')
                                                     <div class="badge badge-soft-secondary">Disetujui</div>
                                                 @else

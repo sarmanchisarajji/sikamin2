@@ -42,14 +42,23 @@
                                         @endif
                                     </span>
                                 </p>
-                                <p>Tanggal Ujian: {{ \Carbon\Carbon::parse($ujian->tanggal_ujian)->format('d F Y') }}</p>
-                                <p>Jam Ujian: {{ \Carbon\Carbon::parse($ujian->jam_ujian)->format('h:i A') }}</p>
+                                <p>Tanggal Ujian:
+                                    {{ $ujian->tanggal_ujian == null ? 'Belum diatur' : \Carbon\Carbon::parse($ujian->tanggal_ujian)->format('d F Y') }}
+                                </p>
+                                <p>Jam Ujian:
+                                    {{ $ujian->jam_ujian == null ? 'Belum diatur' : \Carbon\Carbon::parse($ujian->jam_ujian)->format('h:i A') }}
+                                </p>
                                 <p>Tanggal Daftar: {{ \Carbon\Carbon::parse($ujian->created_at)->format('d F Y') }}</p>
                                 <p>Berkas Ujian:
                                     @if ($ujian->status == 'diajukan')
-                                        <button class="btn btn-sm btn-danger mx-1 my-1">
+                                        <button class="btn btn-sm btn-warning mx-1 my-1">
                                             Belum Diverifikasi
                                         </button>
+                                    @elseif ($ujian->status == 'dikembalikan')
+                                        <button class="btn btn-sm btn-danger mx-1 my-1">
+                                            Dikembalikan
+                                        </button>
+                                        <p class="text-danger">Catatan: {{ $ujian->catatan }}</p>
                                     @else
                                         @if ($ujian->jenis_ujian == 'proposal')
                                             <button class="btn btn-sm btn-success mx-1 my-1" data-bs-toggle="modal"

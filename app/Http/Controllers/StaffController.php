@@ -441,20 +441,29 @@ class StaffController extends Controller
     public function verifikasi_ujian_update(Request $req, $id)
     {
         $ujian = Ujian::where('id', $id)->firstOrFail();
-        $ujian->update([
-            'status' => 'disetujui',
-            'id_penguji_1' =>  $req->id_penguji_1,
-            'id_penguji_2' => $req->id_penguji_2,
-            'id_penguji_3' => $req->id_penguji_3,
-            'tanggal_ujian' => $req->tanggal_ujian,
-            'jam_ujian' => $req->jam_ujian,
-            'tempat_ujian' => $req->tempat_ujian,
-            'ipk_sementara' => $req->ipk_sementara,
-            'id_pembimbing_1' => $req->id_pembimbing_1,
-            'id_pembimbing_2' => $req->id_pembimbing_2,
-        ]);
 
-        toast('Berhasil Memverifikasi Ujian', 'success');
+        if($req->status == 'dikembalikan') {
+            $ujian->update([
+                'status' => 'dikembalikan',
+                'catatan' => $req->catatan
+            ]);
+            toast('Berhasil Mengembalikan Ujian', 'success');
+        }else {
+            $ujian->update([
+                'status' => 'disetujui',
+                'id_penguji_1' =>  $req->id_penguji_1,
+                'id_penguji_2' => $req->id_penguji_2,
+                'id_penguji_3' => $req->id_penguji_3,
+                'tanggal_ujian' => $req->tanggal_ujian,
+                'jam_ujian' => $req->jam_ujian,
+                'tempat_ujian' => $req->tempat_ujian,
+                'ipk_sementara' => $req->ipk_sementara,
+                'id_pembimbing_1' => $req->id_pembimbing_1,
+                'id_pembimbing_2' => $req->id_pembimbing_2,
+                'catatan' => null
+            ]);
+            toast('Berhasil Memverifikasi Ujian', 'success');
+        }
         $redirectUrl = $this->getRedirectUrl($ujian->jenis_ujian);
 
         return redirect($redirectUrl);
