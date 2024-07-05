@@ -94,6 +94,10 @@
                                                             Undangan Proposal
                                                         </a>
                                                         <a class="dropdown-item py-2 {{ $item->status != 'disetujui' ? 'disabled' : '' }}"
+                                                            href="{{ route('s-sk_penguji', $item->id) }}">
+                                                            SK Penguji
+                                                        </a>
+                                                        <a class="dropdown-item py-2 {{ $item->status != 'disetujui' ? 'disabled' : '' }}"
                                                             href="{{ route('s-sk_dekan', $item->id) }}">
                                                             SK Dekan
                                                         </a>

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Dosen;
 use App\Models\Ujian;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -59,6 +60,21 @@ class DosenController extends Controller
         }
 
         // Dapatkan semua ujian yang memiliki dosen sebagai pembimbing atau pengujinya
+        // $currentMonth = Carbon::now()->month;
+        // $currentYear = Carbon::now()->year;
+
+        // $ujians = Ujian::where(function ($query) use ($dosenId) {
+        //     $query->where('id_pembimbing_1', $dosenId)
+        //         ->orWhere('id_pembimbing_2', $dosenId)
+        //         ->orWhere('id_penguji_1', $dosenId)
+        //         ->orWhere('id_penguji_2', $dosenId)
+        //         ->orWhere('id_penguji_3', $dosenId);
+        // })
+        //     ->whereMonth('tanggal_ujian', $currentMonth)
+        //     ->whereYear('tanggal_ujian', $currentYear)
+        //     ->with('mahasiswa') // Eager load relasi dengan mahasiswa
+        //     ->get();
+
         $ujians = Ujian::where('id_pembimbing_1', $dosenId)
             ->orWhere('id_pembimbing_2', $dosenId)
             ->orWhere('id_penguji_1', $dosenId)

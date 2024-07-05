@@ -12,6 +12,11 @@
                         @method('PUT')
 
                         <label for="file">Upload File SK Dekan</label>
+                        @error('sk_dekan')
+                            <div class="alert alert-danger mt-2">{{ $message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @enderror
                         <div>
                             <label class="custum-file-upload" for="file">
                                 <div class="icon">
@@ -41,7 +46,7 @@
             </div>
             <div class="col-md-7 col-12 bg-white p-4">
                 @if (!empty($ujian->sk_dekan))
-                    <embed id="file-iframe" src="{{ asset("storage/$ujian->sk_dekan") }}" align="top" height="800"
+                    <embed id="file-iframe" src="{{ asset('storage/' . $ujian->sk_dekan) }}" align="top" height="800"
                         width="100%" frameborder="0" scrolling="auto"></embed>
                 @else
                     <embed id="file-iframe" src="{{ asset('assets/pdf/null.pdf') }}" align="top" height="800"

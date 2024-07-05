@@ -164,17 +164,21 @@ class SuratController extends Controller
             'ujian' => $ujian,
         ]);
     }
-    
+
     public function sk_dekan_update(Request $req, $id)
     {
         $validatedData = $req->validate([
             'sk_dekan' => 'nullable|file|mimes:pdf|max:1024',
+        ], [
+            'sk_dekan.file' => 'SK Dekan harus berupa file.',
+            'sk_dekan.mimes' => 'SK Dekan harus berupa file PDF.',
+            'sk_dekan.max' => 'SK Dekan maksimal berukuran 1 MB.',
         ]);
 
         $ujian = Ujian::where('id', $id)->with('mahasiswa')->firstOrFail();
         $file = $ujian->sk_dekan;
         if ($req->file('sk_dekan')) {
-            if($file){
+            if ($file) {
                 Storage::delete($ujian->sk_dekan);
             }
             $fileName = 'SK Dekan ' . $ujian->mahasiswa->nama . '.' . $req->file('sk_dekan')->getClientOriginalExtension();
@@ -184,7 +188,7 @@ class SuratController extends Controller
         $ujian->update([
             'sk_dekan' => $file
         ]);
-       
+
         toast('Berhasil Melengkapi SK Dekan', 'success');
         return redirect()->back();
     }

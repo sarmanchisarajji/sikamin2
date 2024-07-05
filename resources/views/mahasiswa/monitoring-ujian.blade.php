@@ -68,6 +68,9 @@
                                             <button class="btn btn-sm btn-warning mx-1 my-1" data-bs-toggle="modal"
                                                 data-bs-target="#bs-example-modal-lg-undangan-{{ $ujian->jenis_ujian }}-{{ $ujian->id }}">Undangan
                                                 Proposal</button>
+                                            <button class="btn btn-sm btn-primary mx-1 my-1" data-bs-toggle="modal"
+                                                data-bs-target="#bs-example-modal-lg-skpenguji-{{ $ujian->jenis_ujian }}-{{ $ujian->id }}">SK
+                                                Penguji</button>
                                         @elseif ($ujian->jenis_ujian == 'hasil')
                                             <button class="btn btn-sm btn-success mx-1 my-1" data-bs-toggle="modal"
                                                 data-bs-target="#bs-example-modal-lg-berita-acara-{{ $ujian->jenis_ujian }}-{{ $ujian->id }}">
@@ -143,10 +146,30 @@
                             </div>
                         </div>
                     </div>
+                    <div class="modal fade"
+                        id="bs-example-modal-lg-skpenguji-{{ $ujian->jenis_ujian }}-{{ $ujian->id }}" tabindex="-1"
+                        role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="myLargeModalLabel">SK Penguji</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-md-12 col-12 bg-white p-4">
+                                        <embed id="file-embed" src="{{ route('sk_penguji_mahasiswa', $ujian->id) }}"
+                                            align="top" height="800" width="100%" frameborder="0"
+                                            scrolling="auto"></embed>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @elseif ($ujian->jenis_ujian == 'hasil')
                     <div class="modal fade"
-                        id="bs-example-modal-lg-berita-acara-{{ $ujian->jenis_ujian }}-{{ $ujian->id }}" tabindex="-1"
-                        role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        id="bs-example-modal-lg-berita-acara-{{ $ujian->jenis_ujian }}-{{ $ujian->id }}"
+                        tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">

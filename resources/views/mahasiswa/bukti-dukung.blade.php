@@ -41,18 +41,18 @@
                     </h6>
                     <ul>
                         @if ($jenis_ujian == 'proposal')
-                            <li>- Lembar Pengesahan</li>
+                            <li>- Lembar Pengesahan Proposal</li>
                             <li>- Sertifikat TOEFL</li>
                             <li>- Lembar Kontrol Proposal</li>
                             <li>- SK Pembimbing</li>
+                            <li>- Lembar Pengajuan Judul</li>
                         @elseif ($jenis_ujian == 'hasil')
                             <li>- Lembar Pengesahan Hasil</li>
                             <li>- Lembar Kontrol Hasil</li>
                         @else
                             <li>- Lembar Pengesahan Skripsi</li>
-                            <li>- Lembar Kontrol Skripsi</li>
+                            <li>- Sertifikat Bukti Kelulusan TOEFL</li>
                         @endif
-
                     </ul>
                 </div>
             </div>
@@ -203,65 +203,112 @@
                                                         <div class="mb-3">
                                                             <label for="nama_berkas" class="form-label">Nama
                                                                 Berkas</label>
-                                                            <input type="text" name="nama_berkas"
+                                                            @if ($jenis_ujian == 'proposal')
+                                                                <select name="nama_berkas"
+                                                                    @error('nama_berkas') is-invalid @enderror
+                                                                    class="form-control" id="nama_berkas" required>
+                                                                    <option selected>~Pilih Berkas~</option>
+                                                                    <option value="Lembar Pengesahan Proposal">
+                                                                        Lembar Pengesahan Proposal
+                                                                    </option>
+                                                                    <option value="Sertifikat TOEFL">
+                                                                        Sertifikat TOEFL
+                                                                    </option>
+                                                                    <option value="Lembar Kontrol Proposal">
+                                                                        Lembar Kontrol Proposal
+                                                                    </option>
+                                                                    <option value="SK Pembimbing">SK Pembimbing</option>
+                                                                    <option value="Lembar Pengajuan Judul">
+                                                                        Lembar Pengajuan Judul
+                                                                    </option>
+                                                                </select>
+                                                                @error('nama_berkas')
+                                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                                @enderror
+                                                            @elseif ($jenis_ujian == 'hasil')
+                                                                <select name="nama_berkas"
+                                                                    @error('nama_berkas') is-invalid @enderror
+                                                                    class="form-control" id="nama_berkas" required>
+                                                                    <option selected>~Pilih Berkas~</option>
+                                                                    <option value="Lembar Pengesahan Hasil">
+                                                                        Lembar Pengesahan Hasil
+                                                                    </option>
+                                                                    <option value="Lembar Kontrol Hasil">
+                                                                        Lembar Kontrol Hasil
+                                                                </select>
+                                                            @else
+                                                                <select name="nama_berkas"
+                                                                    @error('nama_berkas') is-invalid @enderror
+                                                                    class="form-control" id="nama_berkas" required>
+                                                                    <option selected>~Pilih Berkas~</option>
+                                                                    <option value="Lembar Pengesahan Skripsi">
+                                                                        Lembar Pengesahan Skripsi
+                                                                    </option>
+                                                                    <option value="Sertifikat Bukti Kelulusan TOEFL">
+                                                                        Sertifikat Bukti Kelulusan TOEFL
+                                                                </select>
+                                                            @endif
+                                                            {{-- <input type="text" name="nama_berkas"
                                                                 @error('nama_berkas') is-invalid @enderror
                                                                 class="form-control" id="nama_berkas"
                                                                 placeholder="Masukan Nama Berkas" required>
                                                             @error('nama_berkas')
                                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                             @enderror
+                                                        </div> --}}
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="mb-3">
+                                                                <label for="file" class="form-label">Unggah
+                                                                    File</label>
+                                                                <input type="file" name="file"
+                                                                    @error('file') is-invalid @enderror
+                                                                    class="form-control" id="file"
+                                                                    placeholder="Unggah File" required
+                                                                    accept=".doc, .docx, .xls, .xlsx, .pdf">
+                                                                @error('file')
+                                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                                @enderror
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="mb-3">
-                                                            <label for="file" class="form-label">Unggah File</label>
-                                                            <input type="file" name="file"
-                                                                @error('file') is-invalid @enderror class="form-control"
-                                                                id="file" placeholder="Unggah File" required
-                                                                accept=".doc, .docx, .xls, .xlsx, .pdf">
-                                                            @error('file')
-                                                                <div class="invalid-feedback">{{ $message }}</div>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary waves-effect"
+                                                        data-bs-dismiss="modal">Batal</button>
+                                                    <button type="submit"
+                                                        class="btn btn-info waves-effect waves-light">Simpan</button>
                                                 </div>
+                                            </form>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary waves-effect"
-                                                data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit"
-                                                class="btn btn-info waves-effect waves-light">Simpan</button>
-                                        </div>
-                                        </form>
                                     </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <script>
-        function confirmDelete(buktiId) {
-            Swal.fire({
-                title: 'Konfirmasi',
-                text: 'Apakah Anda yakin ingin menghapus?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Ya, hapus!',
-                cancelButtonText: 'Batal!',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Jika pengguna menekan "Ya", kirim formulir
-                    document.getElementById('deleteFile' + buktiId).submit();
-                }
-            });
-        }
-    </script>
-@endsection
+        <script>
+            function confirmDelete(buktiId) {
+                Swal.fire({
+                    title: 'Konfirmasi',
+                    text: 'Apakah Anda yakin ingin menghapus?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal!',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Jika pengguna menekan "Ya", kirim formulir
+                        document.getElementById('deleteFile' + buktiId).submit();
+                    }
+                });
+            }
+        </script>
+    @endsection

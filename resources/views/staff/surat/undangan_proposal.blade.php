@@ -214,12 +214,13 @@
             <tr>
                 <td style="width: 50%;"></td>
                 <td style="width: 50%; text-align: right;">
-                    <div>
+                    <div style="position: absolute">
                         <p
                             style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; text-align: left">
-                            <span style="font-weight: bold">An. Ketua Jurusan Teknik Informatika, <br>
+                            <span style="font-weight: bold">An. Ketua Jurusan Teknik Informatika, <br><br>
                                 <span style="padding-left: 26px">Sekretaris Jurusan Teknik Informatika,</span>
-                            </span> <br><br><br><br><br><br>
+                            </span> <br><br><br><br><br><br><br>
+
                             @foreach ($ttd as $item)
                                 <span style="font-weight: bold">{{ $item->nama_dosen }}</span> <br>
                                 <span style="font-weight: bold">NIP.</span> {{ $item->nip }}
@@ -227,6 +228,15 @@
                         </p>
                     </div>
                 </td>
+                <div style="position: relative; right: 140; bottom: 20;">
+                    <div style="">
+                        <img src="./assets/img/jurusan.png" width="160" style="margin-top: 40px; position:absolute">
+                    </div>
+                    <div>
+                        <img src="./assets/img/ttd_pak.png" width="90"
+                            style="margin-left: 100px; margin-top: 50px; position:absolute">
+                    </div>
+                </div>
             </tr>
         </table>
     </main>

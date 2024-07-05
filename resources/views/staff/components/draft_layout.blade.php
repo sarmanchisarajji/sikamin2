@@ -44,6 +44,9 @@
             <li class="nav-item {{ request()->routeIs('s-undangan_proposal') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('s-undangan_proposal', $ujian->id) }}">Undangan Proposal</a>
             </li>
+            <li class="nav-item {{ request()->routeIs('s-sk_penguji') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('s-sk_penguji', $ujian->id) }}">SK Penguji</a>
+            </li>
             <li class="nav-item {{ request()->routeIs('s-sk_dekan') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('s-sk_dekan', $ujian->id) }}">SK Dekan</a>
             </li>

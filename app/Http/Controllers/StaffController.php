@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 use Mail;
-Use App\Mail\NotificationMail;
+use App\Mail\NotificationMail;
 
 class StaffController extends Controller
 {
@@ -346,18 +346,22 @@ class StaffController extends Controller
             foreach ($ujiansBimbingan as $ujian) {
                 $mahasiswa = $ujian->mahasiswa; // Ambil objek mahasiswa
                 $judul = $ujian->judul; // Ambil judul ujian
+                $jabatan = ($ujian->id_pembimbing_1 == $dosen->id) ? 'Pembimbing 1' : 'Pembimbing 2';
                 $mahasiswasBimbingan[$mahasiswa->id] = [
                     'nama' => $mahasiswa->nama,
                     'judul' => $judul,
+                    'jabatan' => $jabatan,
                 ]; // Simpan objek mahasiswa dan judul ujian
             }
 
             foreach ($ujiansPenguji as $ujian) {
                 $mahasiswa = $ujian->mahasiswa; // Ambil objek mahasiswa
                 $judul = $ujian->judul; // Ambil judul ujian
+                $jabatan = ($ujian->id_penguji_1 == $dosen->id) ? 'Penguji 1' : (($ujian->id_penguji_2 == $dosen->id) ? 'Penguji 2' : 'Penguji 3');
                 $mahasiswasPenguji[$mahasiswa->id] = [
                     'nama' => $mahasiswa->nama,
                     'judul' => $judul,
+                    'jabatan' => $jabatan,
                 ];
             }
 
@@ -365,6 +369,7 @@ class StaffController extends Controller
             $dosen->mahasiswasPenguji = array_values($mahasiswasPenguji);
         }
 
+        // dd($dosens);
         return view('staff.m_dosen', [
             'dosens' => $dosens,
         ]);
@@ -442,13 +447,13 @@ class StaffController extends Controller
     {
         $ujian = Ujian::where('id', $id)->firstOrFail();
 
-        if($req->status == 'dikembalikan') {
+        if ($req->status == 'dikembalikan') {
             $ujian->update([
                 'status' => 'dikembalikan',
                 'catatan' => $req->catatan
             ]);
             toast('Berhasil Mengembalikan Ujian', 'success');
-        }else {
+        } else {
             $ujian->update([
                 'status' => 'disetujui',
                 'id_penguji_1' =>  $req->id_penguji_1,

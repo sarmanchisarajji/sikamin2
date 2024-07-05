@@ -31,16 +31,18 @@
                     </h6>
                     <ul>
                         @if ($ujian->jenis_ujian == 'proposal')
-                            <li>- Lembar Pengesahan</li>
+                            <li>- Lembar Pengesahan Proposal</li>
                             <li>- Sertifikat TOEFL</li>
                             <li>- Lembar Kontrol Proposal</li>
                             <li>- SK Pembimbing</li>
+                            <li>- Lembar Pengajuan Judul</li>
                         @elseif ($ujian->jenis_ujian == 'hasil')
                             <li>- Lembar Pengesahan Hasil</li>
                             <li>- Lembar Kontrol Hasil</li>
                         @else
                             <li>- Lembar Pengesahan Skripsi</li>
-                            <li>- Lembar Kontrol Skripsi</li>
+                            <li>- Lembar Pengesahan Skripsi</li>
+                            <li>- Sertifikat Bukti Kelulusan TOEFL</li>
                         @endif
 
                     </ul>

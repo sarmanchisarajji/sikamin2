@@ -228,7 +228,7 @@
                             <tr>
                                 <td>Kendari,
                                     {{ \Carbon\Carbon::parse($ujian->tanggal_ujian)->locale('id_ID')->isoFormat('D MMMM
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               YYYY') }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       YYYY') }}
                                 </td>
                             </tr>
                             <tr>
@@ -394,8 +394,12 @@
                 <td>
                     <div style="text-align: left">
                         <p>Ketua Jurusan Teknik Informatika</p>
+                        <div class="signature-container">
+                            <img src="./assets/img/jurusan.png" width="160" style="margin-top: 40px">
+                            <img src="./assets/img/ttd_pak.png" width="90" style="margin-left: -100px;">
+                        </div>
                         <p
-                            style="font-weight: bold; text-decoration:underline; text-decoration-thickness: 3px; margin-top: 55px">
+                            style="font-weight: bold; text-decoration:underline; text-decoration-thickness: 3px; margin-top: -60px;">
                             {{ $ujian->nama_ttd }}
                         </p>
                         @foreach ($ttd as $item)
